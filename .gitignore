@@ -1,8 +1,37 @@
-# Raw competition data stays out of the repo
+# Raw competition data and the problem statement stay out of the repo
 /*.csv
 /*.pdf
-# Large generated tables (rebuild with the scripts)
+
+# Large generated tables (made again by running the scripts)
 outputs/*.parquet
+
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
 .ipynb_checkpoints/
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Editors
+.idea/
+.vscode/
+
+# Secrets
+.env
+
+# Windows / Mac
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Temporary files
+*.tmp
+*.log
+~$*
+
+# Private working plan, kept local only
+/PLAN.md
