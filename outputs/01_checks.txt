@@ -1,0 +1,35 @@
+STEP 1 CHECKS
+balls kept: 200,961   matches: 867   innings: 1712
+by competition group (matches): {'IPL': 367, 'Other T20': 30, 'T20I': 470}
+matches with a clear winner: 833   ties: 10   no winner: 24
+
+1. Does the swap-ends rule work? Share of normal balls where the next striker matches the runs scored:
+   99.9780% of 177,095 balls
+
+2. Do rebuilt totals match official results? Matches won by runs, no rain, both innings complete:
+   matches: 390   exact: 62.3%   within 2 runs: 77.2%   within 4 runs: 97.2%   worst: 8
+   without the inferred extras only 11.8% are exact, so the inference helps
+
+3. Winner agrees with the type of margin:
+   'won by wickets' and the winner batted second: 100.0% of 419
+   'won by runs' and the winner batted first:      100.0% of 398
+   wickets in hand at the end equals the stated margin: 99.8%
+
+4. Innings limits:
+   innings with more legal balls than allowed: 0   more than 10 wickets: 0
+   first innings that stop early in the data (rain or missing balls): 27
+   matches with no second innings in the data: 22
+
+5. Chases: runs needed must be above 0 before every ball and reach 0 or less on a winning last ball.
+   balls where runs needed was already 0 or less: 0
+   matches with a winner where the chase stops early (rain or missing balls): 12
+   clean matches (winner, both innings complete): 812
+   how each target was set: {'first innings + 1, fitted to the win': 419, 'result margin': 401, 'first innings + 1': 13, 'tie': 10, 'official revised target': 2}
+
+6. Missing values in the columns later steps use:
+   score_before: 0
+   wickets_before: 0
+   balls_left: 0
+   pace_or_spin: 0
+   striker_id: 0
+   bowler_id: 0

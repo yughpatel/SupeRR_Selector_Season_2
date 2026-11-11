@@ -1,0 +1,8 @@
+# Raw competition data stays out of the repo
+/*.csv
+/*.pdf
+# Large generated tables (rebuild with the scripts)
+outputs/*.parquet
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
