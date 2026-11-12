@@ -10,8 +10,8 @@
 #    for an average player, from the over, wickets down, innings, pace or spin, competition
 #    and the strength of the opponent. It never sees a player name or id.
 #    Opponent strength = how many runs the team usually gives or scores per ball and how often it loses
-#    or takes a wicket, measured on all its OTHER matches (not the match being scored)
-# 2. Wicket cost : how many runs a wicket costs in each phase of an innings, measured from the data
+#    or takes a wicket, measured only on the matches the model is trained on (never the match being scored)
+# 2. Wicket cost : how many runs a wicket costs at each ball of an innings (a smooth curve), measured from the data
 # 3. Value of a ball = actual minus expected, runs and wickets on one scale (runs)
 #    batter : runs above expected, minus the wicket cost if he got out more than expected
 #    bowler : runs saved against expected, plus the wicket cost if he took a wicket
@@ -40,32 +40,25 @@ phase_names = ['overs 1-6', 'overs 7-16', 'overs 17-20']
 balls['phase'] = pd.cut(balls['balls_bowled'], [-1, 35, 95, 120], labels=[0, 1, 2]).astype(int)
 
 
-# Strength of every team, from its other matches
+# Strength of every team, from the training matches only
 # For a team bowling : runs it gives per ball and wickets it takes per ball
 # For a team batting : runs it scores per ball and wickets it loses per ball
-# The current match is left out, so a big innings in this match cannot lift the baseline it is compared with.
+# For every fold the rates come only from the matches that fold's model trains on, so a match is never
+# described by its own result. (My first version left out only the single match being scored. That made the
+# rate go DOWN in matches where the team gave many runs, with a correlation of -0.67 inside a team,
+# and the model used that to peek at the result.)
 # Teams with few balls are pulled towards the competition average (like 600 extra balls at that average)
 k = 600
-for side, team_column, runs_column, prefix in [
-    ('bowl', 'bowling_team_id', 'bowler_runs', 'bowl'),
-    ('bat', 'batting_team_id', 'total_runs', 'bat'),
-]:
-    per_match = balls.groupby(['match_id', team_column]).agg(
-        runs=(runs_column, 'sum'), deliveries=(runs_column, 'size'), wickets=('is_wicket', 'sum'),
-    ).reset_index()
-    for column in ['runs', 'deliveries', 'wickets']:
-        per_match['other_' + column] = per_match.groupby(team_column)[column].transform('sum') - per_match[column]
-    average = balls.groupby('comp_group').agg(
-        avg_runs=(runs_column, 'mean'), avg_wickets=('is_wicket', 'mean'),
-    )
-    per_match = per_match.merge(balls[['match_id', 'comp_group']].drop_duplicates('match_id'), on='match_id')
-    per_match = per_match.merge(average, left_on='comp_group', right_index=True)
-    per_match[prefix + '_runs_rate'] = (per_match['other_runs'] + k * per_match['avg_runs']) / (per_match['other_deliveries'] + k)
-    per_match[prefix + '_wicket_rate'] = (per_match['other_wickets'] + k * per_match['avg_wickets']) / (per_match['other_deliveries'] + k)
-    balls = balls.merge(
-        per_match[['match_id', team_column, prefix + '_runs_rate', prefix + '_wicket_rate']],
-        on=['match_id', team_column], how='left', validate='many_to_one',
-    )
+def opponent_rates(balls, train_mask, team_column, runs_column):
+    seen = balls[train_mask]
+    team = seen.groupby(team_column).agg(runs=(runs_column, 'sum'), deliveries=(runs_column, 'size'), wickets=('is_wicket', 'sum'))
+    average = seen.groupby('comp_group').agg(avg_runs=(runs_column, 'mean'), avg_wickets=('is_wicket', 'mean'))
+    runs = balls[team_column].map(team['runs']).fillna(0)
+    deliveries = balls[team_column].map(team['deliveries']).fillna(0)
+    wickets = balls[team_column].map(team['wickets']).fillna(0)
+    runs_rate = (runs + k * balls['comp_group'].map(average['avg_runs'])) / (deliveries + k)
+    wicket_rate = (wickets + k * balls['comp_group'].map(average['avg_wickets'])) / (deliveries + k)
+    return runs_rate, wicket_rate
 
 
 # Expected outcomes, 4 models
@@ -83,42 +76,89 @@ configs = [
     {'name': 'exp_bowl_wicket', 'rows': pd.Series(True, index=balls.index), 'target': balls['bowler_wicket'], 'opponent': 'bat', 'kind': 'wicket'},
 ]
 
+# Error on the training matches against the held out matches, to see if the models overfit
+gaps = {}
 for config in configs:
-    data = balls[base_features].copy()
-    data['opponent_runs_rate'] = balls[config['opponent'] + '_runs_rate']
-    data['opponent_wicket_rate'] = balls[config['opponent'] + '_wicket_rate']
     target = config['target'].astype(float)
     in_population = config['rows'].values
+    opponent_columns = {'bowl': ('bowling_team_id', 'bowler_runs'), 'bat': ('batting_team_id', 'total_runs')}[config['opponent']]
 
     expected = np.full(len(balls), np.nan)
+    train_error, test_error = [], []
     for fold in range(5):
         train = in_population & (balls['fold'] != fold).values
         test = in_population & (balls['fold'] == fold).values
+        data = balls[base_features].copy()
+        data['opponent_runs_rate'], data['opponent_wicket_rate'] = opponent_rates(
+            balls, (balls['fold'] != fold).values, opponent_columns[0], opponent_columns[1])
+        # Keep the rate each held out match was described with, for check 4
+        held_out = (balls['fold'] == fold).values
+        balls.loc[held_out, config['opponent'] + '_runs_rate'] = data.loc[held_out, 'opponent_runs_rate']
         if config['kind'] == 'runs':
             model = lgb.LGBMRegressor(n_estimators=200, learning_rate=0.05, num_leaves=15, min_child_samples=500, random_state=42, verbose=-1)
             model.fit(data[train], target[train])
             expected[test] = model.predict(data[test])
+            train_error.append(((target[train] - model.predict(data[train])) ** 2).mean())
         else:
             model = lgb.LGBMClassifier(n_estimators=200, learning_rate=0.05, num_leaves=15, min_child_samples=500, random_state=42, verbose=-1)
             model.fit(data[train], target[train].astype(int))
             expected[test] = model.predict_proba(data[test])[:, 1]
+            train_error.append(((target[train] - model.predict_proba(data[train])[:, 1]) ** 2).mean())
+        test_error.append(((target[test] - expected[test]) ** 2).mean())
     balls[config['name']] = expected
+    gaps[config['name']] = (np.mean(train_error), np.mean(test_error))
 
 
-# Wicket cost : how many runs a wicket costs in each phase
-# Runs scored from this ball to the end of the first innings, against wickets already lost.
-# For each phase a straight line fit of: remaining runs = a + b * balls bowled + c * wickets lost
-# c (with the sign flipped) is the number of runs one more wicket costs in that phase.
+# Wicket cost : how many runs a wicket costs at each ball of an innings
+# Runs scored from this ball to the end of the first innings, against balls bowled and wickets already lost.
+# Fit : remaining runs = a + b*t + c*wickets + d*wickets*t + e*t^2 + f*wickets*t^2, with t = balls bowled / 100
+# The cost of one more wicket is -(c + d*t + f*t^2), so it falls smoothly through the innings.
+# (A first version used one number per phase, which jumped from 11.8 to 6.6 between ball 35 and ball 36.)
+# Separate fits for the IPL and the T20I, the 30 Other T20 matches use the fit on everything.
 # Only first innings of complete innings, because a chase stops when the target is reached
 first = balls[(balls['innings'] == 1) & balls['inn1_complete']].copy()
 first['remaining_runs'] = first['final_1'] - first['score_before']
-wicket_cost = {}
-for phase in [0, 1, 2]:
-    part = first[first['phase'] == phase]
-    x = np.column_stack([np.ones(len(part)), part['balls_bowled'], part['wickets_before']])
-    coefficients = np.linalg.lstsq(x, part['remaining_runs'].values, rcond=None)[0]
-    wicket_cost[phase] = -coefficients[2]
-balls['wicket_cost'] = balls['phase'].map(wicket_cost)
+
+def cost_design(t, wickets):
+    return np.column_stack([np.ones(len(t)), t, wickets, wickets * t, t ** 2, wickets * t ** 2])
+
+def fit_cost(part):
+    x = cost_design(part['balls_bowled'].values / 100, part['wickets_before'].values)
+    return np.linalg.lstsq(x, part['remaining_runs'].values, rcond=None)[0]
+
+cost_fits = {group: fit_cost(first[first['comp_group'] == group]) for group in ['IPL', 'T20I']}
+cost_fits['Other T20'] = fit_cost(first)
+
+def wicket_cost_at(ball, group):
+    c = cost_fits[group]
+    t = ball / 100
+    return max(-(c[2] + c[3] * t + c[5] * t ** 2), 0.0)
+
+balls['wicket_cost'] = 0.0
+for group in ['IPL', 'T20I', 'Other T20']:
+    rows = balls['comp_group'] == group
+    c = cost_fits[group]
+    t = balls.loc[rows, 'balls_bowled'] / 100
+    balls.loc[rows, 'wicket_cost'] = (-(c[2] + c[3] * t + c[5] * t ** 2)).clip(lower=0)
+
+# Is the smooth curve better than one number per phase? 5 fold test on first innings, folds by match
+step_error, smooth_error = 0.0, 0.0
+for fold in range(5):
+    train = first[first['fold'] != fold]
+    test = first[first['fold'] == fold]
+    for phase in [0, 1, 2]:
+        a, b = train[train['phase'] == phase], test[test['phase'] == phase]
+        x = lambda d: np.column_stack([np.ones(len(d)), d['balls_bowled'], d['wickets_before']])
+        coefficients = np.linalg.lstsq(x(a), a['remaining_runs'].values, rcond=None)[0]
+        step_error += ((b['remaining_runs'].values - x(b) @ coefficients) ** 2).sum()
+    for group in ['IPL', 'T20I', 'Other T20']:
+        fit_on = train if group == 'Other T20' else train[train['comp_group'] == group]
+        test_on = test[test['comp_group'] == group]
+        coefficients = fit_cost(fit_on)
+        smooth_error += ((test_on['remaining_runs'].values
+                          - cost_design(test_on['balls_bowled'].values / 100, test_on['wickets_before'].values) @ coefficients) ** 2).sum()
+step_error /= len(first)
+smooth_error /= len(first)
 
 
 # Value of every ball (positive = good for the player), runs and wickets on one scale (runs)
@@ -167,12 +207,17 @@ for name, actual, population in [
     brier = ((a - e) ** 2).mean()
     flat = a.mean() * (1 - a.mean())
     checks.append(f"   {name}: average expected {e.mean():.4f}   average actual {a.mean():.4f}   Brier {brier:.5f} against {flat:.5f} for a flat rate")
+checks.append("   overfit test, error on the training matches against the held out matches (a big gap means the model memorised):")
+for name, (train_error, test_error) in gaps.items():
+    checks.append(f"   {name}: training {train_error:.5f}   held out {test_error:.5f}   gap {test_error - train_error:+.5f}")
 checks.append("")
 
 # Check 2 : what a wicket costs
-checks.append("2. Runs a wicket costs in each phase (first innings, complete innings):")
-for phase in [0, 1, 2]:
-    checks.append(f"   {phase_names[phase]}: {wicket_cost[phase]:.1f} runs")
+checks.append("2. Runs a wicket costs at some balls of the innings (first innings, complete innings):")
+for group in ['IPL', 'T20I', 'Other T20']:
+    costs = [wicket_cost_at(ball, group) for ball in [0, 18, 35, 36, 60, 95, 96, 110]]
+    checks.append(f"   {group} at ball 0, 18, 35, 36, 60, 95, 96, 110: " + ", ".join(f"{c:.1f}" for c in costs))
+checks.append(f"   5 fold test of the remaining runs fit, mean squared error: one line per phase {step_error:.1f}, smooth curve {smooth_error:.1f} (lower is better)")
 checks.append("")
 
 # Check 3 : the average value over all players should be near zero in every phase

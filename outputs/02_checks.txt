@@ -48,4 +48,4 @@ balls scored: 200,961   missing win_prob: 0   missing leverage: 0
 
 5. Rule based index against the leverage pressure score:
    rank correlation: 0.234 on all balls, 0.335 on second innings balls only
-   share of the top 10% leverage balls that are also in the top 10% of the rule index: 23.8%
+   share of the top 10% leverage balls that are also in the top 10% of the rule index: 23.7%

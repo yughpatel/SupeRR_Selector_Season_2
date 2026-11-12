@@ -44,9 +44,9 @@ balls['fold'] = balls['match_id'].map(fold_of_match)
 
 # How often each outcome happens, by innings and over (outcomes : 0 to 6 runs, 7 = wicket)
 # Every delivery counts here, wides and no balls too, to keep it simple
+# The shares for a fold are counted on the other 4 folds only (done inside the loop below)
 balls['outcome'] = np.where(balls['is_wicket'], 7, balls['total_runs'].clip(upper=6))
 balls['over_number'] = (balls['balls_bowled'] // 6).clip(upper=19)
-outcome_share = pd.crosstab([balls['innings'], balls['over_number']], balls['outcome'], normalize='index')
 
 
 # Win probability model + leverage
@@ -78,7 +78,9 @@ for innings in [1, 2]:
         part = balls.loc[rows]
         win_prob[rows] = model.predict_proba(part[features])[:, 1]
 
-        # How likely each outcome is for these balls
+        # How likely each outcome is for these balls, counted on the matches outside this fold
+        other_folds = balls[balls['fold'] != fold]
+        outcome_share = pd.crosstab([other_folds['innings'], other_folds['over_number']], other_folds['outcome'], normalize='index')
         over_index = pd.MultiIndex.from_arrays([part['innings'], part['over_number']])
         outcome_prob[rows] = outcome_share.reindex(over_index).values
 
