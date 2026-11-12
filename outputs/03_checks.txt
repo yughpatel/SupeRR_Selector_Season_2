@@ -1,0 +1,35 @@
+STEP 3 CHECKS
+balls: 200,961   legal balls (batters): 192,411
+missing values (batter columns counted on legal balls only): exp_bat_runs 0, exp_bat_out 0, batter_value 0, exp_bowl_runs 0, exp_bowl_wicket 0, bowler_value 0
+
+1. Expected outcomes against what happened (every ball scored by a model that did not train on that match):
+   exp_bat_runs: average expected 1.3942   average actual 1.3941   share of variance explained 0.027
+   exp_bowl_runs: average expected 1.3839   average actual 1.3851   share of variance explained 0.026
+   exp_bat_out: average expected 0.0553   average actual 0.0549   Brier 0.05103 against 0.05185 for a flat rate
+   exp_bowl_wicket: average expected 0.0515   average actual 0.0511   Brier 0.04798 against 0.04845 for a flat rate
+
+2. Runs a wicket costs in each phase (first innings, complete innings):
+   overs 1-6: 11.8 runs
+   overs 7-16: 6.6 runs
+   overs 17-20: 1.9 runs
+
+3. Average value per ball over all players, should be near 0 (runs per ball, std of a single ball in brackets):
+   overs 1-6: batters +0.0067 (3.28)   bowlers -0.0059 (3.20)
+   overs 7-16: batters +0.0024 (2.35)   bowlers -0.0031 (2.30)
+   overs 17-20: batters +0.0035 (2.07)   bowlers -0.0065 (2.01)
+   innings 1: batters +0.0032   bowlers -0.0061
+   innings 2: batters +0.0048   bowlers -0.0028
+   IPL: batters +0.0050   bowlers -0.0077
+   T20I: batters +0.0039   bowlers -0.0032
+   Other T20: batters -0.0074   bowlers +0.0140
+   Pace bowlers: -0.0050
+   Spin bowlers: -0.0039
+   by batting order (role) : order 1-2 +0.0264   order 3-4 +0.0163   order 5-7 +0.0035   order 8-13 -0.1417
+
+4. Opponent strength, runs per legal ball for batters, by how many runs the bowling team usually gives (3 equal groups of balls, inside one competition):
+   T20I: bowling team usually gives 1.278 per ball   expected 1.298   actual 1.302
+   T20I: bowling team usually gives 1.335 per ball   expected 1.333   actual 1.328
+   T20I: bowling team usually gives 1.402 per ball   expected 1.396   actual 1.397
+   IPL: bowling team usually gives 1.422 per ball   expected 1.458   actual 1.470
+   IPL: bowling team usually gives 1.459 per ball   expected 1.507   actual 1.502
+   IPL: bowling team usually gives 1.486 per ball   expected 1.438   actual 1.434
