@@ -1,7 +1,7 @@
 # Step 3 : Comparing every ball with what an average player would do
 #
 # Run from the project folder : python src/03_expected.py
-# Reads  : outputs/balls_clean.parquet (01_clean.py), outputs/balls_pressure.parquet (02_pressure.py, for the folds)
+# Reads  : outputs/balls_clean.parquet (01_clean.py)
 # Writes : outputs/balls_value.parquet (one row per ball, keys + expected outcomes + value of the ball)
 #          outputs/03_checks.txt (checks to see if the values can be trusted)
 #
@@ -28,12 +28,7 @@ keys = ['match_id', 'innings', 'innings_ball_num']
 
 # Loading Dataset
 balls = pd.read_parquet(os.path.join(output_folder, "balls_clean.parquet"))
-folds = pd.read_parquet(os.path.join(output_folder, "balls_pressure.parquet"), columns=keys + ['fold'])
-balls = balls.merge(folds, on=keys, how='left', validate='one_to_one')
-
-balls['over_number'] = (balls['balls_bowled'] // 6).clip(upper=19)
 balls['spin'] = (balls['pace_or_spin'] == 'Spin').astype(int)
-balls['comp_code'] = balls['comp_group'].map({'IPL': 0, 'T20I': 1, 'Other T20': 2})
 
 # 3 phases of an innings, by balls bowled
 phase_names = ['overs 1-6', 'overs 7-16', 'overs 17-20']

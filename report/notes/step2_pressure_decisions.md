@@ -21,7 +21,7 @@ My first version followed the plan: leverage = win chance after a four minus win
 So the final leverage is the average size of the move in win probability over the next ball. For each of the 8 outcomes (0 to 6 runs, wicket) I take the win chance after that outcome, subtract the current win chance, and weight by how often that outcome happens in that over of that innings. A rare early wicket now counts for its 5% chance and not for a full swing. The shares for a fold are counted on the other 4 folds only, so a match is never scored with anything learned from itself (counting them on all matches changed almost nothing, but this keeps one rule everywhere).
 
 - Pressure = leverage as a percentile over all balls (0 to 100), both innings pooled. A first innings ball is therefore compared with every second innings ball. Few first innings balls score high (3.6% are above 90, against 17.1% in the second innings). This is correct under this definition, but it means a batter who always bats first gets fewer high pressure balls. It goes in the limitations.
-- The simple gap is kept in the table as `leverage_gap`. The two agree well overall (rank correlation 0.81) and differ mostly in the first overs.
+- I compared it once with the simple gap. The two agree well overall (rank correlation 0.81) and differ mostly in the first overs. Nothing later uses the gap, so it is not saved.
 - Every ball is treated as a legal ball in the after-states. A wide does not use a ball, but the effect is small.
 - In a chase the end of the game is known: target reached is a win, no balls or no wickets left is a loss. The model is never asked about states it never saw.
 
@@ -56,4 +56,4 @@ It agrees only loosely with the leverage score (rank correlation 0.23 on all bal
 
 ## Output
 
-`outputs/balls_pressure.parquet` has one row per ball (200,961 rows) with the keys (`match_id`, `innings`, `innings_ball_num`), the fold, the win probability, `leverage`, `leverage_gap`, `pressure`, `rule_index` and the signal columns. It is not in git. Run `src/02_pressure.py` to make it.
+`outputs/balls_pressure.parquet` has one row per ball (200,961 rows) with the keys (`match_id`, `innings`, `innings_ball_num`), the win probability, `leverage`, `pressure`, `rule_index` and the signal columns. It is not in git. Run `src/02_pressure.py` to make it.

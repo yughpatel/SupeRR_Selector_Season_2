@@ -23,30 +23,18 @@ import lightgbm as lgb
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from sklearn.metrics import brier_score_loss, log_loss
 
 folder = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 output_folder = os.path.join(folder, "outputs")
 
 # Loading Dataset
 balls = pd.read_parquet(os.path.join(output_folder, "balls_clean.parquet"))
-balls['comp_code'] = balls['comp_group'].map({'IPL': 0, 'T20I': 1, 'Other T20': 2})
-
-
-# Splitting the matches into 5 groups (folds)
-# Every match is scored by a model that was trained on the other 4 groups,
-# so no match is scored by a model that already saw its result
-match_ids = balls['match_id'].unique()
-shuffled = np.random.RandomState(42).permutation(match_ids)
-fold_of_match = pd.Series(np.arange(len(shuffled)) % 5, index=shuffled)
-balls['fold'] = balls['match_id'].map(fold_of_match)
 
 
 # How often each outcome happens, by innings and over (outcomes : 0 to 6 runs, 7 = wicket)
 # Every delivery counts here, wides and no balls too, to keep it simple
 # The shares for a fold are counted on the other 4 folds only (done inside the loop below)
 balls['outcome'] = np.where(balls['is_wicket'], 7, balls['total_runs'].clip(upper=6))
-balls['over_number'] = (balls['balls_bowled'] // 6).clip(upper=19)
 
 
 # Win probability model + leverage
@@ -113,14 +101,10 @@ for innings in [1, 2]:
             win_prob_after[rows, outcome] = p
 
 balls['win_prob'] = win_prob
-balls['p_four'] = win_prob_after[:, 4]
-balls['p_wicket'] = win_prob_after[:, 7]
 
 # Leverage = average size of the move in win probability over the next ball
 swing = np.abs(win_prob_after - win_prob[:, None])
 balls['leverage'] = (outcome_prob * swing).sum(axis=1)
-# The simple version : win probability after a four minus after a wicket
-balls['leverage_gap'] = (balls['p_four'] - balls['p_wicket']).clip(lower=0)
 # Pressure = leverage as a percentile (0 to 100)
 balls['pressure'] = balls['leverage'].rank(pct=True) * 100
 
@@ -206,8 +190,7 @@ balls.loc[balls['innings'] == 1, 'rule_index'] = 50 * (1 - balls['wickets_left']
 
 # Saving the pressure table (keys + new columns, step 3 merges it with the clean table)
 save_columns = [
-    'match_id', 'innings', 'innings_ball_num', 'fold', 'win_prob', 'p_four', 'p_wicket',
-    'leverage', 'leverage_gap', 'pressure', 'rule_index', 'sig_dots', 'sig_wickets', 'sig_new_batter',
+    'match_id', 'innings', 'innings_ball_num', 'win_prob', 'leverage', 'pressure', 'rule_index', 'sig_dots', 'sig_wickets', 'sig_new_batter',
     'sig_knockout', 'felt_count',
 ]
 balls[save_columns].to_parquet(os.path.join(output_folder, "balls_pressure.parquet"), index=False)
@@ -222,15 +205,16 @@ checks.append("")
 
 # Check 1 : is the win probability model honest? (clean matches, every ball scored by a model that did not see the match)
 clean = balls[balls['clean_match']]
-actual = clean['batting_won'].astype(int)
+actual = clean['batting_won']
 base_rate = actual.mean()
+brier = lambda part: ((part['batting_won'] - part['win_prob']) ** 2).mean()
+log_loss = -(actual * np.log(clean['win_prob']) + (1 - actual) * np.log(1 - clean['win_prob'])).mean()
 checks.append("1. Win probability on clean matches (balls scored by a model that did not train on that match):")
-checks.append(f"   balls: {len(clean):,}   Brier score: {brier_score_loss(actual, clean['win_prob']):.4f}"
+checks.append(f"   balls: {len(clean):,}   Brier score: {brier(clean):.4f}"
               f"   (always saying the base rate gives {base_rate * (1 - base_rate):.4f}, lower is better)")
-checks.append(f"   log loss: {log_loss(actual, clean['win_prob']):.4f}")
+checks.append(f"   log loss: {log_loss:.4f}")
 for innings in [1, 2]:
-    part = clean[clean['innings'] == innings]
-    checks.append(f"   innings {innings} Brier score: {brier_score_loss(part['batting_won'].astype(int), part['win_prob']):.4f}")
+    checks.append(f"   innings {innings} Brier score: {brier(clean[clean['innings'] == innings]):.4f}")
 first_ball_2 = balls[(balls['innings'] == 2) & (balls['balls_bowled'] == 0)]
 checks.append(f"   average win probability of the chasing team on the first ball: {first_ball_2['win_prob'].mean():.3f}")
 checks.append("")
@@ -272,16 +256,6 @@ phase = pd.cut(balls['balls_bowled'], [-1, 35, 95, 120], labels=['overs 1-6', 'o
 by_phase = balls.groupby([balls['innings'], phase], observed=True)['pressure'].mean()
 for (innings, name), value in by_phase.items():
     checks.append(f"   innings {innings} {name}: {value:.1f}")
-checks.append("")
-
-# Check 3b : the simple gap version of leverage, for comparison
-gap_corr = balls[['leverage', 'leverage_gap']].corr(method='spearman').iloc[0, 1]
-first_ball = balls[balls['balls_bowled'] == 0]
-checks.append("3b. Simple gap version (win prob after a four minus after a wicket) against the swing version:")
-checks.append(f"   rank correlation: {gap_corr:.3f}")
-checks.append(f"   average win prob lost to a wicket on the first ball of an innings: {(first_ball['win_prob'] - first_ball['p_wicket']).mean():.3f}")
-checks.append(f"   average leverage on the first ball: swing {first_ball['leverage'].mean():.3f}, gap {first_ball['leverage_gap'].mean():.3f}")
-checks.append(f"   average leverage in the last over of a close chase: swing {close_last_over['leverage'].mean():.3f}, gap {close_last_over['leverage_gap'].mean():.3f}")
 checks.append("")
 
 # Check 4 : the felt signals

@@ -206,13 +206,21 @@ balls['max_balls'] = balls['max_balls_1']
 balls.loc[balls['innings'] == 2, 'max_balls'] = balls['max_balls_2']
 balls['balls_left'] = balls['max_balls'] - balls['balls_bowled']
 balls['wickets_left'] = 10 - balls['wickets_before']
+balls['over_number'] = (balls['balls_bowled'] // 6).clip(upper=19)
+balls['comp_code'] = balls['comp_group'].map({'IPL': 0, 'T20I': 1, 'Other T20': 2})
+
+# Splitting the matches into 5 groups (folds) for the models in steps 2 and 3
+# Every match is scored by a model that was trained on the other 4 groups,
+# so no match is scored by a model that already saw its result
+match_ids = balls['match_id'].unique()
+shuffled = np.random.RandomState(42).permutation(match_ids)
+balls['fold'] = balls['match_id'].map(pd.Series(np.arange(len(shuffled)) % 5, index=shuffled))
 
 # Target and runs needed only make sense in the second innings
 balls.loc[balls['innings'] == 1, 'target'] = np.nan
 balls['runs_needed'] = balls['target'] - balls['score_before']
 
-# Run rates per over. On the first ball balls_bowled is 0 so I avoid dividing by 0
-balls['run_rate'] = (balls['score_before'] / balls['balls_bowled'].where(balls['balls_bowled'] > 0) * 6).fillna(0)
+# Required rate per over. On the last ball balls_left can be 0 so I avoid dividing by 0
 balls['required_rate'] = balls['runs_needed'] / balls['balls_left'].where(balls['balls_left'] > 0) * 6
 
 # 1 if the batting team won the match, 0 if it lost, empty if there is no winner

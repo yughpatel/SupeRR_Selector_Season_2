@@ -33,12 +33,6 @@ balls scored: 200,961   missing win_prob: 0   missing leverage: 0
    innings 2 overs 7-16: 50.4
    innings 2 overs 17-20: 48.7
 
-3b. Simple gap version (win prob after a four minus after a wicket) against the swing version:
-   rank correlation: 0.810
-   average win prob lost to a wicket on the first ball of an innings: 0.109
-   average leverage on the first ball: swing 0.011, gap 0.130
-   average leverage in the last over of a close chase: swing 0.137, gap 0.311
-
 4. Felt signals, effect with the match state held fixed (over, wickets down, innings, competition):
    kept if t is 3 or more and the effect is 0.05 runs per ball or 1 percentage point of wicket chance
    sig_dots: on for 5.2% of balls   runs per ball -0.121 (t -7.0)   wicket chance -0.000 (t -0.2)   KEEP
