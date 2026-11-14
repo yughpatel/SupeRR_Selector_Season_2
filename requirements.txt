@@ -2,5 +2,6 @@ pandas>=2.0
 numpy
 pyarrow
 lightgbm
+scikit-learn  # lightgbm's LGBMClassifier and LGBMRegressor need it
 matplotlib
 ipykernel

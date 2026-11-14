@@ -21,7 +21,7 @@ For every player:
 - Level: average value per ball over all his balls.
 - Delta: his average on high pressure balls minus his average on his other balls.
 
-Both are shrunk towards zero. A raw average is true skill plus luck. If true skill varies across players by tau squared and the luck in his n balls is s squared over n, the best guess of his skill is the raw number times tau squared over (tau squared plus s squared over n). The luck of a single ball is measured as the spread of each ball around the player's own average, pooled over all players. Tau squared is measured from the players with enough high pressure balls: the spread of their raw numbers minus their average luck. If it comes out at zero, the whole spread is luck, and every player is pulled all the way to zero.
+Both are shrunk towards zero. A raw average is true skill plus luck. If true skill varies across players by tau squared and the luck in his average is L, the best guess of his skill is the raw number times tau squared over (tau squared plus L). L is the spread of a single ball (around the player's own average, pooled over all players) divided by his number of balls, times one factor for the fact that balls in the same match are not independent: they share the pitch, the conditions and the opposition. The factor is luck measured match by match divided by luck measured ball by ball, averaged over the players in the pool. It comes out at about 1.1 (1.12 for batter level, 1.10 for bowler level, 1.04 and 1.05 for the clutch numbers). Tau squared is measured from the players with enough high pressure balls: the spread of their raw numbers minus their average luck. If it comes out at zero, the whole spread is luck, and every player is pulled all the way to zero.
 
 Score = value expected on a high pressure ball = level + (share of his balls that are not high pressure) times shrunk delta. The share is there because his overall level already includes his high pressure balls.
 
@@ -31,17 +31,17 @@ Shrinkage in one sentence: a player's number is pulled towards the average by as
 
 | | True spread of level | True spread of clutch | Raw spread of clutch | Luck in it |
 |---|---|---|---|---|
-| Batters (cut 80) | 0.108 | 0.000 | 0.216 | 0.228 |
-| Bowlers (cut 80) | 0.077 | 0.062 | 0.211 | 0.202 |
-| Batters (cut 70) | 0.119 | 0.000 | 0.230 | 0.232 |
-| Bowlers (cut 70) | 0.087 | 0.060 | 0.221 | 0.212 |
-| Batters (cut 90) | 0.076 | 0.000 | 0.195 | 0.226 |
-| Bowlers (cut 90) | 0.077 | 0.064 | 0.216 | 0.207 |
+| Batters (cut 80) | 0.103 | 0.000 | 0.216 | 0.231 |
+| Bowlers (cut 80) | 0.072 | 0.046 | 0.211 | 0.206 |
+| Batters (cut 70) | 0.109 | 0.000 | 0.230 | 0.244 |
+| Bowlers (cut 70) | 0.079 | 0.000 | 0.221 | 0.221 |
+| Batters (cut 90) | 0.076 | 0.000 | 0.195 | 0.212 |
+| Bowlers (cut 90) | 0.073 | 0.000 | 0.216 | 0.218 |
 
 All in runs per ball.
 
 - Batters: the difference between how batters do under pressure and how they do otherwise is no bigger than luck would make it. I cannot find a clutch skill for batters in this data. The best guess of how a batter will do on a high pressure ball is his overall level, so the batter list is ranked on level. This is the outcome my plan said to expect if clutch is weak: lean on base level and say so.
-- Bowlers: there is a real clutch spread, nearly as big as the spread in level, and it holds at every cut. It moves a few bowlers (Hazlewood and Rabada up, Bumrah down) without taking over the ranking.
+- Bowlers: clutch is weak and fragile. With the cut at 80 the true spread is 0.046 per ball against 0.072 for level, but with the cut at 70 or 90 it is zero. So I do not claim bowlers have a clutch skill. It moves a few bowlers a little at the cut of 80 (Hazlewood and Rabada up, Bumrah down) and step 5's split-half test decides if it stays.
 
 Why I rank on level and clutch together: the brief asks who performs best under pressure, not who changes most. A great bowler who is a little worse under pressure can still be better under pressure than an average bowler who rises to it. Level plus clutch is exactly "how good on a high pressure ball".
 
@@ -60,16 +60,25 @@ For every player: in his pressure matches, the share where his total value was a
 
 ## Draft top 10s
 
-Batters: Abhishek Sharma, Suryakumar Yadav, Tim David, Heinrich Klaasen, Phil Salt, Rajat Patidar, Travis Head, Sai Sudharsan, Reeza Hendricks, Jos Buttler.
+Batters: Abhishek Sharma, Suryakumar Yadav, Tim David, Heinrich Klaasen, Phil Salt, Rajat Patidar, Travis Head, Sai Sudharsan, Jos Buttler, Reeza Hendricks.
 
-Bowlers: Josh Hazlewood, Matheesha Pathirana, Sunil Narine, Jasprit Bumrah, Kagiso Rabada, Nathan Ellis, Mitchell Santner, Varun Chakravarthy, Mohammad Nawaz, Bhuvneshwar Kumar.
+Bowlers: Josh Hazlewood, Jasprit Bumrah, Matheesha Pathirana, Sunil Narine, Nathan Ellis, Varun Chakravarthy, Kagiso Rabada, Bhuvneshwar Kumar, Mitchell Santner, Mohammad Nawaz.
 
 ## Checks on the lists
 
 - No tilt to chasers: the top 10 batters have 55% of their balls in the first innings, against 53% for all eligible batters. Bowlers: 50% against 51%.
 - No team dominates: Sunrisers Hyderabad have 3 of the top 10 batters, every other team 1 or 2. The value model leaves the player's own team out, so a strong team could give a small head start. Three SRH batters fits their real 2024 season, so I keep it and mention it.
-- The batter score has a rank correlation of 1.00 with raw level (it is level), and 0.69 with the raw high pressure value. For bowlers it is 0.95 and 0.83.
+- The batter score has a rank correlation of 0.99 with raw level (it is shrunk level), and 0.69 with the raw high pressure value. For bowlers it is 0.97 and 0.77.
 - Surprising name: Rajat Patidar is 6th on level (0.295 per ball over 916 balls) but only 0.069 on his 132 high pressure balls, and above the average player in 3 of his 10 pressure matches. With batter clutch at zero, those balls are treated as luck. Step 5's split-half test checks whether that is right.
+
+## Verification
+
+What I checked after building the step:
+
+- Steps 1 to 3 rerun in a fresh virtual environment from `requirements.txt` (pandas 3.1.1) give exactly the same tables and check files. This caught one bug: I had removed scikit-learn from `requirements.txt`, but LightGBM's `LGBMClassifier` and `LGBMRegressor` need it, so steps 2 and 3 failed in a clean install. It is back in, with a comment saying why.
+- I recomputed balls, high pressure balls, raw level, raw high pressure value, pressure matches and consistency by hand for Abhishek Sharma, Rajat Patidar and Josh Hazlewood. All match the notebook exactly.
+- Fixed: the first version measured luck ball by ball, as if every ball were independent. Balls in the same match are not, so that luck was about 10% too small and made bowler clutch look bigger and steadier than it is (about 0.06 at every cut, against 0.046 at the cut of 80 and 0 at 70 and 90 now). The factor above fixes it. Measuring each player's own luck match by match was worse: from 10 to 30 matches it is too noisy and swapped 1 or 2 names in each top 10 by itself. With the single factor the top 10s have the same 20 players as before, in a slightly different order.
+- Measuring the clutch luck around the player's own high and other averages, not his overall average, changes nothing that matters.
 
 ## Output
 
