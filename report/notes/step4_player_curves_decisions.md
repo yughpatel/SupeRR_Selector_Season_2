@@ -54,21 +54,23 @@ Why I rank on level and clutch together: the brief asks who performs best under 
 
 A pressure match is a match where the player had 6 or more high pressure balls. My pick: 100 or more high pressure balls for batters, 120 or more for bowlers (they bowl more balls in a match), and 10 or more pressure matches, about one full season of tight finishes. The ball minimum barely changes who is in. The match minimum is the one that bites. This leaves 67 batters and 85 bowlers.
 
+IPL rule: the submission page asks how each player could strengthen the Rajasthan Royals at the IPL 2027 auction, so the list must hold players an IPL team can sign. A player must also have a real IPL sample: half of the ball minimum (50 high pressure balls for batters, 60 for bowlers) and 5 or more pressure matches in the IPL itself. His T20I balls still count as evidence. This is a rule on the data and not on nationality, but it removes every player with no IPL record since 2022, which includes all the Pakistan players. It leaves out 10 batters (the best are Reeza Hendricks, Glenn Phillips, Mohammad Rizwan) and 23 bowlers (Mohammad Nawaz, Blessing Muzarabani, Haris Rauf), and 57 batters and 62 bowlers stay.
+
 ## Consistency
 
 For every player: in his pressure matches, the share where his total value was above the average player. It is shown next to the score, but not added into it. Over 10 to 30 matches it is noisy, and adding it would need a weight I could not justify. Step 5 checks it.
 
 ## Draft top 10s
 
-Batters: Abhishek Sharma, Suryakumar Yadav, Tim David, Heinrich Klaasen, Phil Salt, Rajat Patidar, Travis Head, Sai Sudharsan, Jos Buttler, Reeza Hendricks.
+Batters: Abhishek Sharma, Suryakumar Yadav, Tim David, Heinrich Klaasen, Phil Salt, Rajat Patidar, Travis Head, Sai Sudharsan, Jos Buttler, Mitchell Marsh.
 
-Bowlers: Josh Hazlewood, Jasprit Bumrah, Matheesha Pathirana, Sunil Narine, Nathan Ellis, Varun Chakravarthy, Kagiso Rabada, Bhuvneshwar Kumar, Mitchell Santner, Mohammad Nawaz.
+Bowlers: Josh Hazlewood, Jasprit Bumrah, Matheesha Pathirana, Sunil Narine, Nathan Ellis, Varun Chakravarthy, Kagiso Rabada, Bhuvneshwar Kumar, Mitchell Santner, Mustafizur Rahman.
 
 ## Checks on the lists
 
-- No tilt to chasers: the top 10 batters have 55% of their balls in the first innings, against 53% for all eligible batters. Bowlers: 50% against 51%.
+- No tilt to chasers: the top 10 batters have 55% of their balls in the first innings, against 52% for all eligible batters. Bowlers: 53% against 51%.
 - No team dominates: Sunrisers Hyderabad have 3 of the top 10 batters, every other team 1 or 2. The value model leaves the player's own team out, so a strong team could give a small head start. Three SRH batters fits their real 2024 season, so I keep it and mention it.
-- The batter score has a rank correlation of 0.99 with raw level (it is shrunk level), and 0.69 with the raw high pressure value. For bowlers it is 0.97 and 0.77.
+- The batter score has a rank correlation of 0.99 with raw level (it is shrunk level), and 0.70 with the raw high pressure value. For bowlers it is 0.97 and 0.83.
 - Surprising name: Rajat Patidar is 6th on level (0.295 per ball over 916 balls) but only 0.069 on his 132 high pressure balls, and above the average player in 3 of his 10 pressure matches. With batter clutch at zero, those balls are treated as luck. Step 5's split-half test checks whether that is right.
 
 ## Verification
