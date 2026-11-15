@@ -22,7 +22,7 @@ python src/02_pressure.py
 python src/03_expected.py
 ```
 
-Then run `notebooks/04_player_curves.ipynb` from top to bottom (PyCharm or Jupyter).
+Then run `notebooks/04_player_curves.ipynb` and `notebooks/05_proof.ipynb` from top to bottom (PyCharm or Jupyter).
 
 Run the steps in order of their number. Each one reads the output of the ones before it.
 
@@ -34,7 +34,7 @@ Run the steps in order of their number. Each one reads the output of the ones be
 | 2 | `src/02_pressure.py` | Gives every ball a pressure score | Done |
 | 3 | `src/03_expected.py` | Compares every ball with what an average player would do | Done |
 | 4 | `notebooks/04_player_curves.ipynb` | Builds the player curves and the draft top 10s | Done |
-| 5 | `src/05_proof.py` | Tests if the rankings hold | Not started |
+| 5 | `notebooks/05_proof.ipynb` | Tests if the rankings hold | Done |
 | 6 | `src/06_charts.py` | Draws the charts for the report | Not started |
 
 ## Folders

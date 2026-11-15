@@ -35,3 +35,6 @@ desktop.ini
 
 # Private working plan, kept local only
 /PLAN.md
+
+# Graph made by graphify, made again by running it
+graphify-out/
