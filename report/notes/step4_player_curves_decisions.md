@@ -106,3 +106,6 @@ Step 3 now knows the ground and the balls a batter has already faced. The number
 - Draft bowlers: Bumrah, Hazlewood, Ellis, Narine, Bhuvneshwar Kumar, Chakravarthy, Pathirana, Mustafizur, Rashid Khan, Santner. Mohsin Khan left, Mitchell Santner came in.
 - No team has more than two players in either list now.
 - The final lists in IPL terms are made in step 5.
+## Bowlers shrunk in two parts (Nov 16)
+
+A bowler's value is runs saved plus wickets (in runs). I now shrink the two parts apart and add them. The true spread between bowlers is 0.077 runs per ball in runs saved and 0.034 in wickets, and step 5 shows why it matters: in two halves of the matches runs saved agree at 0.49 and wickets at 0.15. As one number, the luck of the wickets hid the steadier runs. Draft bowlers now: Bumrah, Narine, Ellis, Mustafizur, Pathirana, Hazlewood, Bhuvneshwar Kumar, Santner, Chakravarthy, Rashid Khan. The batters are not changed.

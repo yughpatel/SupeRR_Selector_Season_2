@@ -85,62 +85,62 @@ batter_texts = {
     'Sai Sudharsan': (
         "Left-hand opener, all 1,674 balls in the IPL, strike rate 149 (the lowest of the ten). Overs 1 to 6: +0.21. Overs 7 to 16: +0.11. Out once in 33 balls. 24 pressure matches.",
         "A left-hand top order batter with a clean IPL record. His value comes from rarely getting out more than from boundaries.",
-        "The slowest scorer of the ten, and -0.04 in overs 17 to 20 (98 balls). He drops out of the top 10 when a wicket costs less. Top 10 in 50% of the redraws."),
+        "The slowest scorer of the ten, and -0.04 in overs 17 to 20 (98 balls). He drops out of the top 10 when a wicket costs less. Top 10 in 52% of the redraws."),
     'Mitchell Marsh': (
         "Opener. Overs 1 to 6: +0.26 (909 balls). Against pace +0.22, against spin +0.05 (585 balls). About zero from 2022 to 2024, then +0.30 and +0.22.",
         "A powerplay batter who hits pace. Both are already strengths of the Royals, so he adds little to their gaps.",
-        "-0.22 in overs 17 to 20 (69 balls) and weak against spin. A close call: top 10 in 44% of the redraws."),
+        "-0.22 in overs 17 to 20 (69 balls) and weak against spin. A close call: top 10 in 46% of the redraws."),
     'Nicholas Pooran': (
         "Left-hander, usually bats 4. Overs 1 to 6: +0.39 (390 balls). Overs 7 to 16: +0.08 (1,256). Overs 17 to 20: +0.11 (319). +0.31, +0.19 and +0.40 from 2023 to 2025.",
         "A left-hander for the middle order, but his middle overs number is ordinary. His best balls are in the powerplay.",
-        "-0.28 in 2026 (182 balls). He drops out of the top 10 in 5 of the 7 changes of section 4, and he is in it in 35% of the redraws."),
+        "-0.28 in 2026 (182 balls). He drops out of the top 10 in 5 of the 7 changes of section 4, and he is in it in 38% of the redraws."),
     'Jos Buttler': (
         "Opener, the most balls of the ten (2,820). No weak phase: overs 1 to 6 +0.16, overs 7 to 16 +0.11, overs 17 to 20 +0.14. +0.24 and +0.18 in 2025 and 2026.",
         "A flexible top order batter who can bat in any phase.",
-        "His IPL balls alone give only +0.03, against +0.31 in T20Is. He drops out of the top 10 in 5 of the 7 changes of section 4, and he is in it in 29% of the redraws."),
+        "His IPL balls alone give only +0.03, against +0.31 in T20Is. He drops out of the top 10 in 5 of the 7 changes of section 4, and he is in it in 35% of the redraws."),
 }
 
 bowler_texts = {
     'Jasprit Bumrah': (
         "Right-arm fast. Overs 17 to 20: +0.41 (495 balls). Overs 7 to 16: +0.27. Overs 1 to 6: +0.18. Against left-handers +0.43 (542 balls), right-handers +0.20. Economy 7.18, a wicket every 20 balls.",
-        "The best fit for the two weaker spots of the Royals' bowling: overs 17 to 20 and left-handers.",
+        "The best fit for the two weaker spots of the Royals' bowling: overs 17 to 20 and left-handers. In the top 10 in nearly every redraw.",
         "-0.01 in 2026 (474 balls). Above the average player in 11 of his 25 pressure matches."),
-    'Josh Hazlewood': (
-        "Right-arm fast-medium. Overs 1 to 6: +0.36 (808 balls). Overs 7 to 16: +0.13. Overs 17 to 20: +0.05 (371). Against left-handers +0.30. A wicket every 15 balls.",
-        "A new ball wicket taker and an option against left-handers. The Royals' powerplay bowling is already above the other teams, so he adds to a strength.",
-        "Weak at the death (+0.05), economy 8.28, and +0.01 in 2026."),
     'Sunil Narine': (
         "Off-spin, all 1,553 balls in the IPL. Economy 6.87, the lowest of the ten. Overs 7 to 16: +0.21 (1,243 balls). Left-handers +0.18, right-handers +0.19.",
-        "Control in the middle overs against both hands.",
-        "The fewest wickets of the ten (one per 24 balls), so he drops out when a wicket costs twice as much. Overs 1 to 6: -0.07 (210 balls)."),
-    'Bhuvneshwar Kumar': (
-        "Right-arm medium. Overs 1 to 6: +0.24 (1,373 balls). Overs 17 to 20: +0.13 (635). Overs 7 to 16: -0.14 (306). Right-handers +0.20, left-handers +0.09.",
-        "A new ball and death bowler, with more balls in those phases than anyone else on the list. He never drops out in the 7 changes of section 4.",
-        "-0.07 in 2024 and -0.05 in 2025, then +0.33 in 2026. Above the average player in 13 of his 31 pressure matches, the lowest share of the ten bowlers."),
+        "Control in the middle overs against both hands. He never drops out in the 7 changes of section 4.",
+        "The fewest wickets of the ten (one per 24 balls). Overs 1 to 6: -0.07 (210 balls)."),
     'Nathan Ellis': (
         "Right-arm medium. Overs 1 to 6: +0.51 (272 balls). Overs 7 to 16: +0.22 (367). Overs 17 to 20: +0.06 (320). Against left-handers +0.32 (341 balls).",
-        "A new ball and left-hander option.",
-        "A thin IPL record: 34% of his balls and exactly the minimum of 5 IPL pressure matches. Only 66 balls in 2026. He is out of the list on IPL balls alone."),
-    'Varun Chakravarthy': (
-        "Leg-spin. Overs 7 to 16: +0.17 (1,655 balls). Overs 1 to 6: +0.23 (361). Overs 17 to 20: -0.11 (166). Right-handers +0.21, left-handers +0.06. A wicket every 15.8 balls.",
-        "A middle overs wicket taker.",
-        "Weak against left-handers, the weaker side of the Royals' bowling too. -0.06 in 2026 (422 balls)."),
+        "A new ball and left-hander option. He never drops out in the 7 changes of section 4.",
+        "A thin IPL record: 34% of his balls and exactly the minimum of 5 IPL pressure matches. Only 66 balls in 2026."),
     'Matheesha Pathirana': (
         "Right-arm fast. Overs 17 to 20: +0.32 (488 balls). Overs 7 to 16: +0.12 (710). A wicket every 13.8 balls, the best of the ten, at an economy of 8.69. Above the average player in 14 of his 17 pressure matches.",
         "A death bowler who takes wickets, for the phase where the Royals' bowling is furthest below the other teams.",
         "-0.09 in 2025 and only 109 balls in 2026. Only 81 balls in the powerplay."),
+    'Mustafizur Rahman': (
+        "Left-arm medium. Overs 7 to 16: +0.28 (531 balls). Overs 17 to 20: +0.11 (604). Overs 1 to 6: +0.04 (511). Left-handers +0.19 (469 balls), right-handers +0.12. Economy 7.76.",
+        "A left-arm option for the middle and the death overs, who also does well against left-handers.",
+        "Only 32% of his balls are IPL balls (+0.13 on those). Only 43 balls in 2026, after +0.36 in 2025. He is in the list because his runs saved are steady; shrunk as one number he would be out."),
+    'Josh Hazlewood': (
+        "Right-arm fast-medium. Overs 1 to 6: +0.36 (808 balls). Overs 7 to 16: +0.13. Overs 17 to 20: +0.05 (371). Against left-handers +0.30. A wicket every 15 balls.",
+        "A new ball wicket taker and an option against left-handers. The Royals' powerplay bowling is already above the other teams, so he adds to a strength.",
+        "Weak at the death (+0.05), economy 8.28, and +0.01 in 2026. His value leans on wickets: he drops out of the top 10 when only runs count."),
+    'Bhuvneshwar Kumar': (
+        "Right-arm medium. Overs 1 to 6: +0.24 (1,373 balls). Overs 17 to 20: +0.13 (635). Overs 7 to 16: -0.14 (306). Right-handers +0.20, left-handers +0.09.",
+        "A new ball and death bowler, with more balls in those phases than anyone else on the list.",
+        "-0.07 in 2024 and -0.05 in 2025, then +0.33 in 2026. Above the average player in 13 of his 31 pressure matches, the lowest share of the ten bowlers."),
+    'Varun Chakravarthy': (
+        "Leg-spin. Overs 7 to 16: +0.17 (1,655 balls). Overs 1 to 6: +0.23 (361). Overs 17 to 20: -0.11 (166). Right-handers +0.21, left-handers +0.06. A wicket every 15.8 balls.",
+        "A middle overs wicket taker.",
+        "Weak against left-handers, the weaker side of the Royals' bowling too. -0.06 in 2026 (422 balls). He is out of the list on IPL balls alone, and in the top 10 in 39% of the redraws."),
     'Rashid Khan': (
         "Leg-spin, the most balls of any bowler (2,780). Overs 7 to 16: +0.14 (2,174 balls). Left-handers +0.28 (955 balls), right-handers +0.03. Economy 7.41.",
         "Middle overs control, and an answer to left-handers.",
-        "His IPL balls alone give +0.06, against +0.22 in T20Is. About zero against right-handers. He drops out in 5 of the 7 changes of section 4 and is in the top 10 in 29% of the redraws."),
-    'Kuldeep Yadav': (
-        "Left-arm wrist spin. Overs 7 to 16: +0.12 (1,775 balls). Overs 17 to 20: +0.20 (172). The same +0.12 against right and left-handers. A wicket every 16 balls.",
-        "A left-arm wrist spinner for the middle overs, a type of bowler the rest of the list does not have.",
-        "-0.27 in 2026 (344 balls). His IPL balls alone give +0.08, against +0.24 in T20Is. He drops out in 5 of the 7 changes of section 4 and is in the top 10 in 29% of the redraws."),
-    'Trent Boult': (
-        "Left-arm fast-medium, 88% of his balls in the IPL. Overs 1 to 6: +0.21 (993 balls). Overs 7 to 16: -0.01. Overs 17 to 20: -0.03 (271). +0.46 in 2023.",
-        "A left-arm new ball bowler. The Royals' powerplay bowling is already above the other teams.",
-        "-0.65 in 2026, on 107 balls. Nothing after the powerplay. He drops out in 5 of the 7 changes of section 4, and Mohsin Khan (11th) is level with him."),
+        "His IPL balls alone give +0.06, against +0.22 in T20Is, and he is out of the list on IPL balls alone. About zero against right-handers. Top 10 in 40% of the redraws."),
+    'Mitchell Santner': (
+        "Slow left-arm. Overs 7 to 16: +0.16 (1,381 balls). Right-handers +0.17, left-handers 0.00 (408 balls). Economy 7.41. Above the average player in 12 of his 17 pressure matches.",
+        "A left-arm spinner for the middle overs who keeps the runs down against right-handers.",
+        "Only 32% of his balls are IPL balls and he has 7 IPL pressure matches. Nothing against left-handers, and -0.17 in overs 17 to 20 (94 balls). He drops out in 4 of the 7 changes of section 4 and is in the top 10 in 37% of the redraws."),
 }
 
 # Checks : every player of both lists has a text, and the numbers of the tables below are the ones I read from the notebooks
@@ -207,16 +207,16 @@ told me nothing about batters in the other half of the matches, and no more than
 parts.append("""<div class='three'>
 <div><b>Pressure.</b> For every ball, how far the chance of winning is expected to move on the next ball. A ball is high pressure if it is in the top fifth of all balls (score 80 or more).</div>
 <div><b>Performance.</b> What happened on the ball minus what an average player would have done in the same situation: over, wickets, innings, balls already faced, pace or spin, competition, opponent and ground. Wickets count as runs.</div>
-<div><b>Ranking.</b> Value per ball over all balls, small samples pulled towards the average, only players with a real IPL record, and T20I balls adjusted to IPL terms.</div>
+<div><b>Ranking.</b> Value per ball over all balls, small samples pulled towards the average (for bowlers, runs saved and wickets apart), only players with a real IPL record, and T20I balls adjusted to IPL terms.</div>
 </div>""")
 parts.append(picture("charts/01_final_lists.png", "The two final lists. Bar = runs per ball above an average player, in IPL terms. Percentage = share of 1,000 redraws of the matches in which the player is in the top 10."))
 parts.append("""<div class='two'><div>
 <h3>What the tests say</h3>
 <ul>
 <li>A player's overall level comes back in the other half of the matches (correlation 0.32 for batters, 0.20 for bowlers). A clutch number does not (-0.23 and +0.07), and shuffled labels give anything from -0.25 to +0.24.</li>
-<li>The top 5 batters are in the top 10 in 90% or more of 1,000 redraws of the matches, and the top 3 bowlers in 78% or more. Places 7 to 10 of the batters and 6 to 10 of the bowlers are close calls.</li>
-<li>Abhishek Sharma, Tim David, Klaasen and Patidar (batters) and Bumrah and Bhuvneshwar Kumar (bowlers) stay in the top 10 under every one of seven changes to my own choices (the price of a wicket, the seasons used, no shrinking). Places 9 and 10 of both lists drop out in most of them.</li>
-<li>Looking forward is hard: a level built on 2022 to 2025 predicts 2026 only weakly (0.04 for batters, 0.23 for bowlers). Section 4 says what that means.</li>
+<li>The top 5 batters are in the top 10 in 89% or more of 1,000 redraws of the matches, and the top 3 bowlers in 85% or more. Places 7 to 10 of the batters and 8 to 10 of the bowlers are close calls.</li>
+<li>Abhishek Sharma, Tim David, Klaasen and Patidar (batters) and Bumrah, Narine and Ellis (bowlers) stay in the top 10 under every one of seven changes to my own choices (the price of a wicket, the seasons used, no shrinking). Places 9 and 10 of the batters drop out in most of them.</li>
+<li>Looking forward is hard: a level built on 2022 to 2025 predicts 2026 only weakly (0.04 for batters, 0.26 for bowlers). Section 4 says what that means.</li>
 </ul></div><div>
 <h3>For the Rajasthan Royals</h3>
 <ul>
@@ -267,9 +267,10 @@ parts.append("<h2>3. How I compare players fairly</h2>")
 parts.append("""<ul>
 <li>A player's level is his average value per ball. A raw average is skill plus luck, so I pull every player towards the average of the pool by as much as luck could explain. The amount is estimated from the data: the true spread between players is about 0.09 runs per ball for batters and 0.08 for bowlers, while one ball has a spread above 2 runs.
 So 100 balls get pulled hard and 2,000 balls barely move. One lucky over cannot put anyone at rank 1. Balls from the same match are not independent (same pitch, same opponent), and I allow for that by raising the luck by up to about 10%.</li>
+<li>For bowlers I shrink the two parts of the value apart, runs saved and wickets, and then add them. In two halves of the matches a bowler's runs saved agree at 0.49 and his wickets at 0.15, so the wicket part of his average is mostly luck and has to be pulled harder. As one number, the luck of the wickets drowns the steadier runs. Shrunk in two parts the level predicts a bowler's value in the other half at 0.28, against 0.23 as one number, and it is the better one in 92% of 200 tries. Batters would gain less (0.38 against 0.35), so they stay as one number.</li>
 <li>To be eligible a batter needs at least 100 high pressure balls (a bowler 120, because bowlers bowl more balls per match) and at least 10 pressure matches, meaning matches with 6 or more high pressure balls. That is about one full season of tight finishes. It leaves 67 batters and 85 bowlers.</li>
 <li>The report is for an IPL auction, so a player also needs a real IPL sample: half the ball minimum and 5 pressure matches in the IPL itself. His T20I balls still count as evidence. 57 batters and 62 bowlers stay. The rule is on the data, not on nationality, but it removes everyone with no IPL record since 2022, which includes the Pakistan players on the dropdown.</li>
-<li>T20I balls are easier: the same player is 0.08 runs per ball better in T20Is than in the IPL as a batter (40 players with 300 or more balls in both) and 0.04 as a bowler (36 players). The final lists take that average gap off every T20I ball. It keeps the same 10 batters, and swaps two bowlers: Kuldeep Yadav and Trent Boult in, Mustafizur Rahman and Mitchell Santner out.</li>
+<li>T20I balls are easier: the same player is 0.08 runs per ball better in T20Is than in the IPL as a batter (40 players with 300 or more balls in both) and 0.04 as a bowler (36 players). The final lists take that average gap off every T20I ball. The 20 names are the same with or without it, only the order moves.</li>
 </ul>""")
 parts.append(picture("charts/06_ipl_vs_t20i.png", "The same player in the IPL and in T20Is. Most points are above the line, and the two agree only loosely (correlation 0.30 and 0.52), as they should when each is measured on half the balls.", "82%"))
 
@@ -296,22 +297,23 @@ parts.append(f"""<table class='numbers'><tr><th class='left'>Weight on level (<i
 parts.append("</div></div>")
 parts.append("<h3>Do the lists hold?</h3>")
 parts.append("""<table class='numbers'><tr><th class='left'>Test</th><th>Batters: of my top 10 stay</th><th>Bowlers: of my top 10 stay</th></tr>
-<tr><td class='left'>T20I balls not adjusted (the step 4 order)</td><td>10</td><td>8 (Mustafizur and Santner in, Kuldeep and Boult out)</td></tr>
-<tr><td class='left'>IPL balls only</td><td>7 (Iyer, Head and Gill in; Salt, Marsh and Buttler out)</td><td>7 (Prasidh, Mohsin and Rabada in; Ellis, Rashid and Kuldeep out)</td></tr>
+<tr><td class='left'>T20I balls not adjusted (the step 4 order)</td><td>10</td><td>10</td></tr>
+<tr><td class='left'>IPL balls only</td><td>7 (Iyer, Head and Gill in; Salt, Marsh and Buttler out)</td><td>7 (Prasidh, Mohsin and Boult in; Chakravarthy, Rashid and Santner out)</td></tr>
 <tr><td class='left'>High pressure balls picked with the rule based index</td><td>8 (Abhishek and Patidar have fewer than 10 pressure matches under it)</td><td>10</td></tr>
-<tr><td class='left'>Ball minimum 60 to 150 (batters) or 72 to 180 (bowlers), 10 pressure matches</td><td>9 or 10</td><td>9 or 10</td></tr>
+<tr><td class='left'>Ball minimum 60 to 150 (batters) or 72 to 180 (bowlers), 10 pressure matches</td><td>9 or 10</td><td>10</td></tr>
 <tr><td class='left'>5 pressure matches instead of 10</td><td>8 (Sooryavanshi and Russell in)</td><td>10</td></tr>
-<tr><td class='left'>15 pressure matches instead of 10</td><td>7 (Klaasen, Patidar and Salt not ranked)</td><td>9 (Ellis out)</td></tr>
-<tr><td class='left'>Price of a wicket times 0 (runs only) / 0.5 / 1.5 / 2</td><td>7 / 8 / 9 / 7</td><td>6 / 8 / 9 / 7</td></tr>
-<tr><td class='left'>Only the seasons 2024 to 2026 / only 2025 to 2026</td><td>8 / 6 (Pooran and Buttler out in both)</td><td>7 / 5 (Rashid, Kuldeep and Boult out in both)</td></tr></table>
+<tr><td class='left'>15 pressure matches instead of 10</td><td>7 (Klaasen, Patidar and Salt not ranked)</td><td>8 (Ellis and Santner not ranked)</td></tr>
+<tr><td class='left'>Price of a wicket times 0 (runs only) / 0.5 / 1.5 / 2</td><td>7 / 8 / 9 / 7</td><td>8 / 9 / 10 / 7</td></tr>
+<tr><td class='left'>Only the seasons 2024 to 2026 / only 2025 to 2026</td><td>8 / 6 (Pooran and Buttler out in both)</td><td>8 / 7 (Santner out in both)</td></tr>
+<tr><td class='left'>Bowlers shrunk as one number (my first version)</td><td></td><td>8 (Kuldeep and Boult in, Mustafizur and Santner out)</td></tr></table>
 <p>Over the last seven changes (wicket price, seasons, and no shrinking) the batters who never drop out are Abhishek Sharma, Tim David, Klaasen and Patidar. Buttler and Pooran drop out in 5 of 7, Sudharsan, Marsh and Salt in 2, and Suryakumar Yadav in 1.
-Among the bowlers Bumrah and Bhuvneshwar Kumar never drop out, Rashid Khan, Kuldeep Yadav and Boult drop out in 5 of 7, and the others in 1. I treat the players who never drop as the firmest picks, and places 9 and 10 of both lists as good but replaceable.</p>
+Among the bowlers Bumrah, Narine and Ellis never drop out, Santner drops out in 4 of 7, Rashid Khan in 3, Chakravarthy in 2, and the others in 1. I treat the players who never drop as the firmest picks, and the last places of both lists as good but replaceable.</p>
 <h3>Does the past predict the next season?</h3>
 <p>An auction buys the next season, and every test above mixes the years. So I built the level from the years up to 2025 only and compared it with each player's level in 2026 (about 40 players per list with 150 or more balls in 2026).
-For batters the level from 2022 to 2025 predicts 2026 at 0.04, from 2024 and 2025 at 0.11, and from 2025 alone at 0.24. For bowlers it is 0.23, -0.01 and 0.04. With one season and 40 players these numbers move by about 0.15 on luck alone, so they do not pick a better window.
+For batters the level from 2022 to 2025 predicts 2026 at 0.04, from 2024 and 2025 at 0.11, and from 2025 alone at 0.24. For bowlers it is 0.26, -0.01 and 0.05. With one season and 40 players these numbers move by about 0.15 on luck alone, so they do not pick a better window.
 They do say that one T20 season is very noisy, and that a five year level is a weak forecast for batters. I keep the five year level, because the shorter windows are no better for bowlers, and I show every player's form by year in section 6.</p>""")
 parts.append(picture("charts/05_rank_confidence.png", "How often each player is in the top 10 when I draw the same number of matches again 1,000 times with repeats and rank again. The first 5 batters and the first 3 bowlers are firm.", "88%"))
-parts.append("""<p>Mohsin Khan (50% of the redraws) and Mustafizur Rahman (32%) are the closest bowlers outside the list, level with or above the 8th to 10th bowler. Among batters Head (37%) and Stoinis (36%) are level with places 9 and 10. I also show for every player the share of his pressure matches in which he beat the average player.
+parts.append("""<p>Mohsin Khan (35% of the redraws) and Boult (30%) are the closest bowlers outside the list, just below the 8th to 10th bowler (37% to 40%). Among batters Head (36%) and Stoinis (35%) are level with places 9 and 10. I also show for every player the share of his pressure matches in which he beat the average player.
 It comes back in the other half for bowlers (0.26) and not for batters (0.02), so I show it but I do not put it into the score.</p>""")
 parts.append(list_table(batters, "Batter"))
 parts.append(list_table(bowlers, "Bowler"))
@@ -321,12 +323,12 @@ parts.append("<div class='small'>Pressure matches = matches with 6 or more high 
 parts.append("<h2>5. Reliability and limitations</h2>")
 parts.append("""<ul>
 <li>The lists are the players who are best against an average player in the same situations, which is the best guess of who is best under pressure. A clutch skill smaller than about 0.10 runs per ball could exist and this data could not show it.</li>
-<li>Places 7 to 10 of the batters and 6 to 10 of the bowlers could change with a different set of matches. Travis Head, Marcus Stoinis (batters) and Mohsin Khan, Mustafizur Rahman (bowlers) are the nearest alternatives.</li>
+<li>Places 7 to 10 of the batters and 8 to 10 of the bowlers could change with a different set of matches. Travis Head, Marcus Stoinis (batters) and Ashwin, Mohsin Khan (bowlers) are the nearest alternatives.</li>
 <li>The value depends on what a wicket costs, which is my own estimate. Players who score fast and get out more often gain when wickets are cheap, and players who rarely get out gain when they are dear: Virat Kohli is 22nd among the batters, and he enters the top 10 when a wicket costs one and a half or two times as much, or when I use only the recent seasons.</li>
-<li>The value is an average over 2022 to 2026 with every year counted the same, and it is a weak forecast of the next season (section 4). Some players are lower lately: Pooran (-0.28 in 2026), Salt (0.00), Kuldeep Yadav (-0.27), Boult (-0.65 on 107 balls), Chakravarthy (-0.06), Bumrah (-0.01). Section 6 shows every player by year.</li>
+<li>The value is an average over 2022 to 2026 with every year counted the same, and it is a weak forecast of the next season (section 4). Some players are lower lately: Pooran (-0.28 in 2026), Salt (0.00), Chakravarthy (-0.06), Bumrah (-0.01). Section 6 shows every player by year.</li>
 <li>The win probability model does not know team strength or the ground, and the first innings is weak (Brier 0.223, against 0.129 in the second innings), which is normal because nobody knows the result at ball 1. A batter who mostly bats first gets fewer high pressure balls, because first innings balls are compared with chase balls (3.6% of first innings balls score above 90, against 17.1% in the second).</li>
-<li>The T20I adjustment is one average gap for every player. Nathan Ellis (34% IPL balls) and Phil Salt (44%) lean the most on T20I balls.</li>
-<li>Some samples are small: Patidar has 916 balls and Ellis has 5 IPL pressure matches. The batter list depends on the minimum of 10 pressure matches (section 4).</li>
+<li>The T20I adjustment is one average gap for every player. Mustafizur Rahman and Mitchell Santner (32% IPL balls each), Nathan Ellis (34%) and Phil Salt (44%) lean the most on T20I balls.</li>
+<li>Some samples are small: Patidar has 916 balls, Ellis has 5 IPL pressure matches and Santner 7. The batter list depends on the minimum of 10 pressure matches (section 4).</li>
 <li>The value model does not know a player's own team strength, so a strong team could give a small head start. No team has more than two players in either list.</li>
 <li>The data does not say who is retained or in the auction, what anyone costs, who fills the overseas slots, or anyone's age, fitness, wicketkeeping and fielding. It also ignores what batters do when they bowl. Section 6 uses only what the ball by ball data can say.</li>
 </ul>""")
@@ -345,8 +347,8 @@ parts.append(fit_table(batters, batter_texts))
 parts.append("<h3>Bowlers</h3>")
 parts.append(fit_table(bowlers, bowler_texts))
 parts.append("""<p>Putting it together: for the batting gaps, Tim David, Suryakumar Yadav, Klaasen and Patidar are the ones whose numbers are strongest in overs 7 to 20 and against spin, and three of them never drop out of the list. Abhishek Sharma, Salt, Sudharsan, Marsh and Buttler are openers, which is the Royals' strength already, so they are choices for quality and depth. Pooran's middle overs number is ordinary.
-For the bowling gaps, Bumrah and Pathirana are the strongest in overs 17 to 20, and Bumrah, Ellis, Hazlewood and Rashid Khan are the strongest against left-handers. Narine, Chakravarthy, Rashid Khan and Kuldeep Yadav are the middle overs bowlers, and Narine (6.87) and Bumrah (7.18) have the best economies.
-The biggest cautions are the 2026 seasons of Pooran, Kuldeep Yadav and Boult, and the thin IPL sample of Ellis.</p>""")
+For the bowling gaps, Bumrah and Pathirana are the strongest in overs 17 to 20, and Bumrah, Ellis, Hazlewood and Rashid Khan are the strongest against left-handers. Narine, Chakravarthy, Rashid Khan and Santner are the middle overs bowlers, Mustafizur covers the middle and the death overs, and Narine (6.87) and Bumrah (7.18) have the best economies.
+The biggest cautions are the 2026 season of Pooran and the thin IPL samples of Ellis, Mustafizur and Santner.</p>""")
 parts.append(picture("charts/07_value_by_year.png", "Value per ball by year. A year with fewer than 100 balls is blank. 2026 is the IPL season only. The last two years matter most for the IPL 2027 auction.", "96%"))
 
 # ---------- Reproduce

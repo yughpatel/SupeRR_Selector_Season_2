@@ -147,3 +147,23 @@ Step 3 now knows the ground and the balls a batter has already faced, so every t
 - Final batters: Abhishek Sharma, Tim David, Suryakumar Yadav, Klaasen, Patidar, Salt, Sudharsan, Marsh, Pooran, Buttler.
 - Final bowlers: Bumrah, Hazlewood, Narine, Bhuvneshwar Kumar, Ellis, Chakravarthy, Pathirana, Rashid Khan, Kuldeep Yadav, Boult.
 - Rank confidence: batters 1 to 5 in the top 10 in 90% to 97% of the redraws, places 7 to 10 in 29% to 50%. Bowlers 1 to 3 in 78% to 95%, places 8 to 10 in 29% to 36%. Mohsin Khan (50%) is the closest bowler outside, Head (37%) and Stoinis (36%) the closest batters.
+## Bowlers shrunk in two parts (Nov 16)
+
+The bowler list was the weakest part: the bowler level came back in the other half at only 0.20. Test 1c (`outputs/05_parts.csv`) splits a value into its runs part and its wicket part.
+
+| | Batters | Bowlers |
+|---|---|---|
+| Runs part comes back at | 0.62 | 0.49 |
+| Wicket part comes back at | 0.37 | 0.15 |
+| Level as one number predicts the other half at | 0.35 | 0.23 |
+| Level in two parts predicts the other half at | 0.38 | 0.28 |
+| Two parts better in | 77% of tries | 92% of tries |
+
+- Decision: bowlers are ranked on the two parts. Wickets still count, at the same price, but the wicket part of an average is pulled harder because it is mostly luck. Batters gain less and stay as one number, which keeps the batter list as it was.
+- In the notebook a level is now the sum over a list of parts (one part for a batter, two for a bowler), and every test uses it.
+- The rank confidence now keeps the pull of every player fixed across the redraws. Drawing matches again adds luck to every raw level, so a pull measured again inside each draw was too weak, and it showed with two parts (Ashwin, 11th, came out at a middle place of 24).
+- Final bowlers: Bumrah, Narine, Ellis, Pathirana, Mustafizur, Hazlewood, Bhuvneshwar Kumar, Chakravarthy, Rashid Khan, Santner. Against the list shrunk as one number, Mustafizur and Santner are in and Kuldeep Yadav and Boult are out.
+- Tests on the new list: IPL terms keeps all 10. IPL balls only 7. Rule index 10. Wicket price 0 / 0.5 / 1.5 / 2: 8 / 9 / 10 / 7. Recent seasons 8 / 7. No shrinking 8. Bumrah, Narine and Ellis never drop out, Santner drops out in 4 of 7, Rashid Khan in 3.
+- Rank confidence: Bumrah 100%, Narine 98%, Ellis 85%, Mustafizur 75%, Pathirana 72%, Hazlewood and Bhuvneshwar Kumar 60%, Rashid Khan 40%, Chakravarthy 39%, Santner 37%. Closest outside: Mohsin Khan 35%, Boult 30%, Ashwin 29%. No bowler outside is above a bowler inside now.
+- Forward test for bowlers: 0.26 from 2022 to 2025 (-0.01 and 0.05 for the shorter windows).
+- Batters with the fixed pull: 97%, 97%, 98%, 95%, 89%, 68%, 52%, 46%, 38%, 35%.
