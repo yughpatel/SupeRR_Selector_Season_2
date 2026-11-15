@@ -1,0 +1,22 @@
+Check 1 : the splits of every player add up to his balls
+   batters: phase True, innings True, competition True, year True
+   bowlers: phase True, innings True, competition True, year True
+Check 2 : value over all balls of a player against the raw level in 04_batters.csv and 04_bowlers.csv
+   batters: biggest gap 0.00005
+   bowlers: biggest gap 0.00004
+The Rajasthan Royals in IPL 2025 and 2026 : 30 matches, 3382 legal balls batted, 3691 balls bowled
+   value per ball against the other teams, by split (the average of all teams is near 0):
+   batting  all balls          3382 balls   RR +0.132   others +0.071   gap +0.061   (luck alone moves it by about 0.052)
+   batting  overs 1-6          1080 balls   RR +0.409   others +0.093   gap +0.316   (luck alone moves it by about 0.119)
+   batting  overs 7-16         1746 balls   RR +0.019   others +0.070   gap -0.051   (luck alone moves it by about 0.061)
+   batting  overs 17-20         556 balls   RR -0.054   others +0.033   gap -0.087   (luck alone moves it by about 0.090)
+   batting  against Pace       2257 balls   RR +0.184   others +0.063   gap +0.121   (luck alone moves it by about 0.066)
+   batting  against Spin       1125 balls   RR +0.027   others +0.087   gap -0.060   (luck alone moves it by about 0.080)
+   batting  high pressure       686 balls   RR +0.334   others +0.146   gap +0.188   (luck alone moves it by about 0.105)
+   bowling  all balls          3691 balls   RR -0.106   others -0.066   gap -0.040   (luck alone moves it by about 0.046)
+   bowling  overs 1-6          1138 balls   RR -0.102   others -0.113   gap +0.011   (luck alone moves it by about 0.110)
+   bowling  overs 7-16         1865 balls   RR -0.113   others -0.057   gap -0.056   (luck alone moves it by about 0.055)
+   bowling  overs 17-20         688 balls   RR -0.095   others -0.005   gap -0.090   (luck alone moves it by about 0.079)
+   bowling  to RHB             2352 balls   RR -0.085   others -0.082   gap -0.004   (luck alone moves it by about 0.055)
+   bowling  to LHB             1339 balls   RR -0.142   others -0.040   gap -0.102   (luck alone moves it by about 0.082)
+   bowling  high pressure       784 balls   RR -0.088   others -0.159   gap +0.070   (luck alone moves it by about 0.095)

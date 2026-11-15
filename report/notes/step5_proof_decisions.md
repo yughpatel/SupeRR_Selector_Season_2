@@ -73,6 +73,27 @@ My pick was 100 (batters) or 120 (bowlers) high pressure balls and 10 pressure m
 
 I keep 10 matches. Sooryavanshi is the name to mention: he is a Rajasthan Royals player and would be in the list with a lower minimum, but under 10 pressure matches I cannot tell him from a hot streak.
 
+## Test 5: my own choices
+
+The tests above change the data. This one changes my choices, the ones a reviewer would question. The price of a wicket is my own estimate and a wicket is half of the variance of a ball value, so I rank again with the price times 0 (runs only), 0.5, 1.5 and 2. The value is an average over 2022 to 2026 with every year counted the same, so I also rank on 2024 to 2026 only and on 2025 to 2026 only (the pool for shrinking and the minimums stay as they are). Last, I rank on the raw level with no shrinking. Results are in `outputs/05_sensitivity.csv`.
+
+| Change | Batters: of my 10 stay | Bowlers: of my 10 stay |
+|---|---|---|
+| Wicket price x 0 (runs only) | 7 | 7 |
+| x 0.5 | 8 | 9 |
+| x 1.5 | 8 | 8 |
+| x 2 | 7 | 7 |
+| Only 2024 to 2026 | 7 | 7 |
+| Only 2025 to 2026 | 7 | 8 |
+| No shrinking | 10 | 9 |
+
+- Every change moves 1 to 3 names and none moves more. The rank correlation with the final order stays between 0.69 and 0.99.
+- Batters who never drop out: Abhishek Sharma, Klaasen, Tim David, Patidar. Head drops out in 4 of the 7 runs, Sudharsan and Marsh in 3, Buttler, Salt and Suryakumar Yadav in 2. Suryakumar Yadav and Head are out in both runs that use the recent years only.
+- Bowlers who never drop out: Bumrah and Ellis. Rashid Khan drops out in 4 of 7, Chakravarthy, Mohsin Khan, Narine and Mustafizur in 2, and Hazlewood, Bhuvneshwar Kumar and Pathirana in 1.
+- Who comes in changes with the price. Virat Kohli (17th) enters the batter top 10 when a wicket costs twice as much and on 2024 to 2026 only. That is the style effect of the value: a player who rarely gets out gains when wickets are dear, a fast scorer who gets out more often gains when they are cheap. It goes in the limitations.
+- Shrinking changes almost nothing here because the ranked players all have large samples. Its job is in the full pool, where it keeps small samples out of the top.
+- Decision: no change to the lists. The players who never drop are the firm picks, and the report says the others are good but replaceable.
+
 ## Final lists and rank confidence
 
 The final lists are ranked on the level in IPL terms (test 2). Then I draw the same number of matches again with repeats, 1,000 times, and rank the players again every time. The ranked players, the pool and the T20I gap stay fixed, so this shows only how far luck in the matches moves a rank.

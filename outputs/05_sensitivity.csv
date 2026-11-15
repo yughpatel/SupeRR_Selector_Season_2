@@ -1,0 +1,15 @@
+list,scenario,ranked,of_my_10_stay,rank_correlation,out,in
+batters,wicket price x 0 (runs only),57,7,0.764,"Sai Sudharsan, Jos Buttler, Mitchell Marsh","Prabhsimran Singh, Ryan Rickelton, Nicholas Pooran"
+batters,wicket price x 0.5,57,8,0.941,"Sai Sudharsan, Jos Buttler","Cameron Green, Nicholas Pooran"
+batters,wicket price x 1.5,57,8,0.961,"Travis Head, Mitchell Marsh","Namboori Tilak Varma, Shubman Gill"
+batters,wicket price x 2,57,7,0.895,"Phil Salt, Travis Head, Mitchell Marsh","Virat Kohli, Lokesh Rahul, Namboori Tilak Varma"
+batters,years 2024 to 2026 only,57,7,0.844,"Suryakumar Yadav, Travis Head, Sai Sudharsan","Virat Kohli, Shreyas Iyer, Ishan Kishan"
+batters,years 2025 to 2026 only,56,7,0.69,"Suryakumar Yadav, Phil Salt, Travis Head","Ishan Kishan, Shreyas Iyer, Lokesh Rahul"
+batters,no shrinking (raw level),57,10,0.995,,
+bowlers,wicket price x 0 (runs only),62,7,0.824,"Josh Hazlewood, Varun Chakravarthy, Mohsin Khan","Ravichandran Ashwin, Maheesh Theekshana, Krunal Pandya"
+bowlers,wicket price x 0.5,62,9,0.959,Varun Chakravarthy,Mitchell Santner
+bowlers,wicket price x 1.5,62,8,0.968,"Sunil Narine, Mustafizur Rahman","Wanindu Hasaranga, Kagiso Rabada"
+bowlers,wicket price x 2,62,7,0.915,"Sunil Narine, Mustafizur Rahman, Rashid Khan","Wanindu Hasaranga, Kagiso Rabada, Kuldeep Yadav"
+bowlers,years 2024 to 2026 only,62,7,0.846,"Bhuvneshwar Kumar, Mohsin Khan, Rashid Khan","Lockie Ferguson, Jason Holder, Noor Ahmad"
+bowlers,years 2025 to 2026 only,62,8,0.781,"Matheesha Pathirana, Rashid Khan","Noor Ahmad, Jason Holder"
+bowlers,no shrinking (raw level),62,9,0.992,Rashid Khan,Lockie Ferguson
