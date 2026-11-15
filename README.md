@@ -2,6 +2,25 @@
 
 My work for Round 1 of the Rajasthan Royals SupeRR Selector hackathon. The task is to rank the 10 best batters and the 10 best bowlers under pressure, using IPL and T20I ball by ball data from 2022 onwards.
 
+## Final lists
+
+Ranked on value per ball above an average player in the same situation (over, wickets, innings, balls already faced, pace or spin, competition, opponent and ground), with small samples pulled towards the average and T20I balls adjusted to IPL terms. Only players with a real IPL sample are ranked, because the lists are for the IPL 2027 auction. "In top 10" is the share of 1,000 redraws of the matches in which the player stays in the top 10.
+
+| # | Batter | In top 10 | Bowler | In top 10 |
+|---|---|---|---|---|
+| 1 | Abhishek Sharma | 96% | Jasprit Bumrah | 95% |
+| 2 | Tim David | 97% | Josh Hazlewood | 78% |
+| 3 | Suryakumar Yadav | 96% | Sunil Narine | 78% |
+| 4 | Heinrich Klaasen | 94% | Bhuvneshwar Kumar | 58% |
+| 5 | Rajat Patidar | 90% | Nathan Ellis | 73% |
+| 6 | Phil Salt | 66% | Varun Chakravarthy | 55% |
+| 7 | Sai Sudharsan | 50% | Matheesha Pathirana | 64% |
+| 8 | Mitchell Marsh | 44% | Rashid Khan | 29% |
+| 9 | Nicholas Pooran | 35% | Kuldeep Yadav | 29% |
+| 10 | Jos Buttler | 29% | Trent Boult | 36% |
+
+The full ranked lists are in `outputs/05_batters.csv` and `outputs/05_bowlers.csv`, and the reasons and tests are in `report/superr_report.pdf`. I found no clutch skill beyond a player's overall level in this data, so the lists rank on level. The players who stay in the top 10 under every change I tried are Abhishek Sharma, Tim David, Klaasen, Patidar, Bumrah and Bhuvneshwar Kumar. Places 9 and 10 of both lists are close calls.
+
 ## Data
 
 The raw data is not in this repo. Put these files from the competition in the project folder before running anything:
