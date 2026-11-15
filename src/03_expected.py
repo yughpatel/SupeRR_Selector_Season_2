@@ -7,10 +7,12 @@
 #
 # What I do:
 # 1. Expected outcomes : a LightGBM model says how many runs and how likely a wicket on this ball
-#    for an average player, from the over, wickets down, innings, pace or spin, competition
-#    and the strength of the opponent. It never sees a player name or id.
+#    for an average player, from the over, wickets down, innings, pace or spin, competition,
+#    how many balls the striker has already faced, the strength of the opponent and the ground.
+#    It never sees a player name or id.
 #    Opponent strength = how many runs the team usually gives or scores per ball and how often it loses
 #    or takes a wicket, measured only on the matches the model is trained on (never the match being scored)
+#    Ground = runs per ball and wickets per ball at that venue, measured the same way
 # 2. Wicket cost : how many runs a wicket costs at each ball of an innings (a smooth curve), measured from the data
 # 3. Value of a ball = actual minus expected, runs and wickets on one scale (runs)
 #    batter : runs above expected, minus the wicket cost if he got out more than expected
@@ -34,6 +36,12 @@ balls['spin'] = (balls['pace_or_spin'] == 'Spin').astype(int)
 phase_names = ['overs 1-6', 'overs 7-16', 'overs 17-20']
 balls['phase'] = pd.cut(balls['balls_bowled'], [-1, 35, 95, 120], labels=[0, 1, 2]).astype(int)
 
+# Legal balls the striker has already faced in this innings, before this ball.
+# A batter scores 0.2 runs per ball less in his first 10 balls (step 2), so a new batter and a set batter
+# are not in the same situation. Without this, batters who bat long looked better than finishers.
+balls = balls.sort_values(keys).reset_index(drop=True)
+balls['balls_faced'] = balls.groupby(['match_id', 'innings', 'striker_id'])['legal'].cumsum() - balls['legal']
+
 
 # Strength of every team, from the training matches only
 # For a team bowling : runs it gives per ball and wickets it takes per ball
@@ -43,6 +51,10 @@ balls['phase'] = pd.cut(balls['balls_bowled'], [-1, 35, 95, 120], labels=[0, 1, 
 # rate go DOWN in matches where the team gave many runs, with a correlation of -0.67 inside a team,
 # and the model used that to peek at the result.)
 # Teams with few balls are pulled towards the competition average (like 600 extra balls at that average)
+#
+# The same function gives the rates of a ground (team_column = 'venue_id') : some grounds are flat and some
+# are slow, and the spread between grounds is as big as the spread between players. A batter is then compared
+# with an average batter on that kind of ground. The ground rates also come from the training matches only.
 k = 600
 def opponent_rates(balls, train_mask, team_column, runs_column):
     seen = balls[train_mask]
@@ -56,6 +68,24 @@ def opponent_rates(balls, train_mask, team_column, runs_column):
     return runs_rate, wicket_rate
 
 
+# The rates every ball is described with, for the model that leaves out one fold.
+# Balls of the left out fold : rates from the 4 training folds.
+# Balls of a training fold   : rates from the other 3 training folds, so their own match is not inside either.
+# (At first the training balls had their own match inside the rate. The model then trusted the rate too much :
+# on the held out matches, grounds and teams with a high rate scored 0.03 runs per ball less than expected.
+# With this, the average error per ball is the same and the expected runs of a match line up better with the real ones.)
+def fold_rates(balls, fold, team_column, runs_column):
+    in_training = (balls['fold'] != fold).values
+    runs_rate, wicket_rate = opponent_rates(balls, in_training, team_column, runs_column)
+    runs_rate, wicket_rate = runs_rate.copy(), wicket_rate.copy()
+    for other in range(5):
+        if other != fold:
+            own = (balls['fold'] == other).values
+            other_runs, other_wickets = opponent_rates(balls, in_training & ~own, team_column, runs_column)
+            runs_rate[own], wicket_rate[own] = other_runs[own], other_wickets[own]
+    return runs_rate, wicket_rate
+
+
 # Expected outcomes, 4 models
 # A batter is compared with an average batter against the SAME opponent (the bowling team),
 # a bowler with an average bowler against the batting team. Only the opponent is an input,
@@ -63,7 +93,7 @@ def opponent_rates(balls, train_mask, team_column, runs_column):
 # Batters are judged on legal balls (a wide is not a ball faced), bowlers on every delivery.
 # Every match is scored by a model that did not train on that match (same 5 folds as step 2).
 # Pressure and the target are NOT inputs, so the expected value is for a normal ball in that situation
-base_features = ['innings', 'over_number', 'wickets_before', 'spin', 'comp_code']
+base_features = ['innings', 'over_number', 'wickets_before', 'spin', 'comp_code', 'balls_faced']
 configs = [
     {'name': 'exp_bat_runs', 'rows': balls['legal'], 'target': balls['bat_runs'], 'opponent': 'bowl', 'kind': 'runs'},
     {'name': 'exp_bat_out', 'rows': balls['legal'], 'target': balls['striker_out'], 'opponent': 'bowl', 'kind': 'wicket'},
@@ -84,11 +114,12 @@ for config in configs:
         train = in_population & (balls['fold'] != fold).values
         test = in_population & (balls['fold'] == fold).values
         data = balls[base_features].copy()
-        data['opponent_runs_rate'], data['opponent_wicket_rate'] = opponent_rates(
-            balls, (balls['fold'] != fold).values, opponent_columns[0], opponent_columns[1])
-        # Keep the rate each held out match was described with, for check 4
+        data['opponent_runs_rate'], data['opponent_wicket_rate'] = fold_rates(balls, fold, opponent_columns[0], opponent_columns[1])
+        data['venue_runs_rate'], data['venue_wicket_rate'] = fold_rates(balls, fold, 'venue_id', 'total_runs')
+        # Keep the rates each held out match was described with, for checks 4 and 5
         held_out = (balls['fold'] == fold).values
         balls.loc[held_out, config['opponent'] + '_runs_rate'] = data.loc[held_out, 'opponent_runs_rate']
+        balls.loc[held_out, 'venue_runs_rate'] = data.loc[held_out, 'venue_runs_rate']
         if config['kind'] == 'runs':
             model = lgb.LGBMRegressor(n_estimators=200, learning_rate=0.05, num_leaves=15, min_child_samples=500, random_state=42, verbose=-1)
             model.fit(data[train], target[train])
@@ -193,6 +224,9 @@ for name, actual, population in [
     e = balls.loc[population, name]
     r2 = 1 - ((a - e) ** 2).sum() / ((a - a.mean()) ** 2).sum()
     checks.append(f"   {name}: average expected {e.mean():.4f}   average actual {a.mean():.4f}   share of variance explained {r2:.3f}")
+    # Match by match : if the model expects 0.1 more runs per ball in a match, are there 0.1 more? (1.00 = yes)
+    per_match = pd.DataFrame({'expected': e, 'actual': a, 'match_id': balls.loc[population, 'match_id']}).groupby('match_id').mean()
+    checks.append(f"      match by match, slope of actual on expected {np.polyfit(per_match['expected'], per_match['actual'], 1)[0]:.2f}")
 for name, actual, population in [
     ('exp_bat_out', balls['striker_out'], legal.index),
     ('exp_bowl_wicket', balls['bowler_wicket'], balls.index),
@@ -246,6 +280,30 @@ for group in ['T20I', 'IPL']:
     table = part.groupby(tercile, observed=True).agg(usual=('bowl_runs_rate', 'mean'), expected=('exp_bat_runs', 'mean'), actual=('bat_runs', 'mean'))
     for _, row in table.iterrows():
         checks.append(f"   {group}: bowling team usually gives {row['usual']:.3f} per ball   expected {row['expected']:.3f}   actual {row['actual']:.3f}")
+
+checks.append("")
+
+# Check 5 : the ground. Batter value by how many runs the ground usually gives, and what is left at the big IPL grounds.
+# (Without the ground in the model the average batter value at the 13 big IPL grounds ran from -0.18 to +0.12.)
+checks.append("5. Ground, runs per legal ball for batters, by how many runs the ground usually gives (3 equal groups of balls, inside one competition):")
+for group in ['T20I', 'IPL']:
+    part = legal[legal['comp_group'] == group]
+    tercile = pd.qcut(part['venue_runs_rate'], 3, duplicates='drop')
+    table = part.groupby(tercile, observed=True).agg(usual=('venue_runs_rate', 'mean'), expected=('exp_bat_runs', 'mean'), actual=('bat_runs', 'mean'), value=('batter_value', 'mean'))
+    for _, row in table.iterrows():
+        checks.append(f"   {group}: ground usually gives {row['usual']:.3f} per ball   expected {row['expected']:.3f}   actual {row['actual']:.3f}   batter value {row['value']:+.4f}")
+ipl = legal[legal['comp_group'] == 'IPL']
+per_ground = ipl.groupby('venue_id')['batter_value'].agg(['mean', 'size'])
+big_grounds = per_ground[per_ground['size'] >= 3000]
+checks.append(f"   batter value left at the {len(big_grounds)} IPL grounds with 3000+ balls: from {big_grounds['mean'].min():+.3f} to {big_grounds['mean'].max():+.3f}, "
+              f"spread {big_grounds['mean'].std():.3f}")
+checks.append("")
+
+# Check 6 : balls already faced. The average value should be near 0 for a new batter and for a set batter
+checks.append("6. Average batter value per ball by balls the striker has already faced, should be near 0:")
+faced_group = pd.cut(legal['balls_faced'], [-1, 9, 19, 29, 200], labels=['0-9', '10-19', '20-29', '30+'])
+by_faced = legal.groupby(faced_group, observed=True)['batter_value'].agg(['mean', 'size'])
+checks.append("   " + "   ".join(f"{name}: {row['mean']:+.4f} ({int(row['size']):,} balls)" for name, row in by_faced.iterrows()))
 
 with open(os.path.join(output_folder, "03_checks.txt"), "w", encoding="utf-8", newline="\n") as f:
     f.write("\n".join(checks) + "\n")

@@ -1,0 +1,7 @@
+list,level built on,players,correlation with 2026,rank correlation
+batters,2022 to 2025,40,0.044,0.004
+batters,2024 to 2025,40,0.114,-0.015
+batters,2025 only,40,0.24,0.123
+bowlers,2022 to 2025,42,0.234,0.294
+bowlers,2024 to 2025,42,-0.008,-0.028
+bowlers,2025 only,40,0.036,0.104

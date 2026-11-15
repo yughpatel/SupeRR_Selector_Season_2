@@ -100,3 +100,13 @@ Checked and fine:
 ## Output
 
 `outputs/balls_value.parquet` has one row per ball (200,961 rows) with the keys, the fold, the phase, the wicket cost, the four expected values, `batter_value` and `bowler_value`. It is not in git. Run `src/03_expected.py` to make it.
+
+## Added after a review (Nov 15): the ground and the balls already faced
+
+A review of the whole project found two things the expected outcome models did not know, and both moved names.
+
+- The ground. Without it, the average batter value at the 13 IPL grounds with 3,000 or more balls ran from -0.18 to +0.12 per ball (spread 0.095), as big as the true spread between players, and two random halves of the matches agreed on it (0.60). So flat grounds were lifting their batters. The models now get the runs and wickets per ball of the ground, measured the same way as opponent strength.
+- The balls the striker has already faced. A batter's first 10 balls averaged -0.08 and his later balls +0.08 to +0.11, so openers who bat long looked better than finishers who walk in late. The models now get the number of legal balls the striker has faced in the innings.
+- While adding the ground I found that the training balls carried their own match inside the ground and opponent rates. The model then trusted the rates too much: on the held out matches, grounds and teams with a high rate scored about 0.03 runs per ball less than expected. Every training ball now gets rates from the other training folds only. The average error per ball is the same, and the expected runs of a match line up better with the real ones (slope 0.94 for batters, 0.98 for bowlers, against 0.86 before).
+
+After the change (`outputs/03_checks.txt`, checks 5 and 6): the value left at the big IPL grounds runs from -0.10 to +0.04 (spread 0.039), every group of balls faced is within 0.01 of zero, and the average value is within about 0.01 of zero in every phase, innings, competition and bowler type. The share of variance explained by the runs models went from 0.019 to 0.029.

@@ -1,16 +1,16 @@
 name,balls,value,position,role,kind
-Dhruv Jurel,333,0.0389,3.0,batter,
-Vaibhav Sooryavanshi,326,0.8959,2.0,batter,
-Yashasvi Jaiswal,280,-0.0409,1.0,batter,
-Ravindra Jadeja,196,0.1256,6.0,batter,
-Riyan Parag,195,0.0506,4.0,batter,
-Donovan Ferreira,177,0.3086,6.0,batter,
-Shimron Hetmyer,69,-0.5319,5.0,batter,
-Jofra Archer,379,0.1737,,bowler,Right-arm Fast
-Brijesh Sharma,297,-0.0796,,bowler,Right-arm Fast
-Nandre Burger,278,-0.1262,,bowler,Left-arm fast-medium
-Ravindra Jadeja,202,-0.02,,bowler,Slow left-arm orthodox
-Yash Punja,186,-0.0996,,bowler,Right-arm Leg-Break
-Ravi Bishnoi,164,-0.0958,,bowler,Right-arm Leg-Break
-Tushar Deshpande,151,-0.3863,,bowler,Right-arm medium
-Sandeep Sharma,127,-0.3462,,bowler,Right-arm Fast
+Dhruv Jurel,333,-0.0177,3.0,batter,
+Vaibhav Sooryavanshi,326,0.7707,2.0,batter,
+Yashasvi Jaiswal,280,-0.1355,1.0,batter,
+Ravindra Jadeja,196,0.0715,6.0,batter,
+Riyan Parag,195,0.0727,4.0,batter,
+Donovan Ferreira,177,0.3224,6.0,batter,
+Shimron Hetmyer,69,-0.5546,5.0,batter,
+Jofra Archer,379,0.2605,,bowler,Right-arm Fast
+Brijesh Sharma,297,-0.0174,,bowler,Right-arm Fast
+Nandre Burger,278,-0.0768,,bowler,Left-arm fast-medium
+Ravindra Jadeja,202,0.0229,,bowler,Slow left-arm orthodox
+Yash Punja,186,-0.0763,,bowler,Right-arm Leg-Break
+Ravi Bishnoi,164,-0.0444,,bowler,Right-arm Leg-Break
+Tushar Deshpande,151,-0.3593,,bowler,Right-arm medium
+Sandeep Sharma,127,-0.2446,,bowler,Right-arm Fast

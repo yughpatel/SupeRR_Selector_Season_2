@@ -3,15 +3,17 @@ balls: 200,961   legal balls (batters): 192,411
 missing values (batter columns counted on legal balls only): exp_bat_runs 0, exp_bat_out 0, batter_value 0, exp_bowl_runs 0, exp_bowl_wicket 0, bowler_value 0
 
 1. Expected outcomes against what happened (every ball scored by a model that did not train on that match):
-   exp_bat_runs: average expected 1.3940   average actual 1.3941   share of variance explained 0.019
-   exp_bowl_runs: average expected 1.3850   average actual 1.3851   share of variance explained 0.020
-   exp_bat_out: average expected 0.0552   average actual 0.0549   Brier 0.05150 against 0.05185 for a flat rate
-   exp_bowl_wicket: average expected 0.0514   average actual 0.0511   Brier 0.04822 against 0.04845 for a flat rate
+   exp_bat_runs: average expected 1.3991   average actual 1.3941   share of variance explained 0.029
+      match by match, slope of actual on expected 0.94
+   exp_bowl_runs: average expected 1.3888   average actual 1.3851   share of variance explained 0.029
+      match by match, slope of actual on expected 0.98
+   exp_bat_out: average expected 0.0549   average actual 0.0549   Brier 0.05147 against 0.05185 for a flat rate
+   exp_bowl_wicket: average expected 0.0515   average actual 0.0511   Brier 0.04823 against 0.04845 for a flat rate
    overfit test, error on the training matches against the held out matches (a big gap means the model memorised):
-   exp_bat_runs: training 2.95832   held out 2.97724   gap +0.01891
-   exp_bat_out: training 0.05122   held out 0.05150   gap +0.00027
-   exp_bowl_runs: training 2.85753   held out 2.87444   gap +0.01691
-   exp_bowl_wicket: training 0.04798   held out 0.04822   gap +0.00024
+   exp_bat_runs: training 2.91177   held out 2.94619   gap +0.03443
+   exp_bat_out: training 0.05101   held out 0.05147   gap +0.00046
+   exp_bowl_runs: training 2.81854   held out 2.84823   gap +0.02968
+   exp_bowl_wicket: training 0.04780   held out 0.04823   gap +0.00043
 
 2. Runs a wicket costs at some balls of the innings (first innings, complete innings):
    IPL at ball 0, 18, 35, 36, 60, 95, 96, 110: 18.2, 14.6, 11.5, 11.3, 7.6, 3.3, 3.2, 1.9
@@ -20,22 +22,34 @@ missing values (batter columns counted on legal balls only): exp_bat_runs 0, exp
    5 fold test of the remaining runs fit, mean squared error: one line per phase 604.8, smooth curve 588.4 (lower is better)
 
 3. Average value per ball over all players, should be near 0 (runs per ball, std of a single ball in brackets):
-   overs 1-6: batters +0.0037 (3.44)   bowlers -0.0030 (3.35)
-   overs 7-16: batters +0.0015 (2.32)   bowlers -0.0022 (2.28)
-   overs 17-20: batters +0.0053 (2.13)   bowlers -0.0039 (2.06)
-   innings 1: batters +0.0028   bowlers -0.0042
-   innings 2: batters +0.0029   bowlers -0.0010
-   IPL: batters +0.0023   bowlers -0.0022
-   T20I: batters +0.0019   bowlers -0.0029
-   Other T20: batters +0.0241   bowlers -0.0070
-   Pace bowlers: -0.0027
-   Spin bowlers: -0.0028
-   by batting order (role) : order 1-2 +0.0294   order 3-4 +0.0169   order 5-7 -0.0046   order 8-13 -0.1428
+   overs 1-6: batters -0.0078 (3.44)   bowlers -0.0012 (3.35)
+   overs 7-16: batters -0.0058 (2.32)   bowlers +0.0012 (2.27)
+   overs 17-20: batters +0.0065 (2.11)   bowlers -0.0052 (2.05)
+   innings 1: batters -0.0042   bowlers -0.0004
+   innings 2: batters -0.0046   bowlers -0.0009
+   IPL: batters -0.0104   bowlers +0.0029
+   T20I: batters -0.0012   bowlers -0.0043
+   Other T20: batters +0.0239   bowlers +0.0100
+   Pace bowlers: -0.0022
+   Spin bowlers: +0.0018
+   by batting order (role) : order 1-2 -0.0061   order 3-4 +0.0051   order 5-7 +0.0062   order 8-13 -0.0710
 
 4. Opponent strength, runs per legal ball for batters, by how many runs the bowling team usually gives (3 equal groups of balls, inside one competition):
-   T20I: bowling team usually gives 1.280 per ball   expected 1.277   actual 1.287
-   T20I: bowling team usually gives 1.334 per ball   expected 1.338   actual 1.346
-   T20I: bowling team usually gives 1.403 per ball   expected 1.412   actual 1.394
-   IPL: bowling team usually gives 1.423 per ball   expected 1.435   actual 1.459
-   IPL: bowling team usually gives 1.459 per ball   expected 1.478   actual 1.480
-   IPL: bowling team usually gives 1.491 per ball   expected 1.497   actual 1.467
+   T20I: bowling team usually gives 1.280 per ball   expected 1.304   actual 1.287
+   T20I: bowling team usually gives 1.334 per ball   expected 1.340   actual 1.346
+   T20I: bowling team usually gives 1.403 per ball   expected 1.383   actual 1.394
+   IPL: bowling team usually gives 1.423 per ball   expected 1.475   actual 1.459
+   IPL: bowling team usually gives 1.459 per ball   expected 1.484   actual 1.480
+   IPL: bowling team usually gives 1.491 per ball   expected 1.488   actual 1.467
+
+5. Ground, runs per legal ball for batters, by how many runs the ground usually gives (3 equal groups of balls, inside one competition):
+   T20I: ground usually gives 1.264 per ball   expected 1.266   actual 1.250   batter value -0.0140
+   T20I: ground usually gives 1.341 per ball   expected 1.327   actual 1.332   batter value +0.0011
+   T20I: ground usually gives 1.451 per ball   expected 1.434   actual 1.445   batter value +0.0092
+   IPL: ground usually gives 1.396 per ball   expected 1.414   actual 1.387   batter value -0.0185
+   IPL: ground usually gives 1.498 per ball   expected 1.520   actual 1.515   batter value -0.0031
+   IPL: ground usually gives 1.544 per ball   expected 1.520   actual 1.513   batter value -0.0086
+   batter value left at the 13 IPL grounds with 3000+ balls: from -0.100 to +0.042, spread 0.039
+
+6. Average batter value per ball by balls the striker has already faced, should be near 0:
+   0-9: -0.0100 (100,740 balls)   10-19: +0.0017 (49,632 balls)   20-29: -0.0051 (24,435 balls)   30+: +0.0117 (17,604 balls)

@@ -40,3 +40,7 @@ The report is `report/superr_report.pdf` (9 pages, A4). It is printed from `repo
 ## Not done yet
 
 - Step 7: read the report once from start to finish, check that the Unstop dropdown picks match the report in the same order, submit.
+
+## Rerun after the step 3 change (Nov 15)
+
+After the ground and the balls already faced were added in step 3, every table, chart and the 20 player texts were rebuilt. Four names changed (Pooran in, Head out; Kuldeep Yadav and Boult in, Mohsin Khan and Mustafizur out). The Royals gaps changed too: the powerplay batting gap is now +0.25 against a band of 0.24, so it is only just outside luck, and the Royals' bowling is level with the other teams overall and above them in the powerplay. The report script checks twelve Royals numbers against `06_rr_profile.csv` now, and every number in the player texts was checked against the facts tables by script again.

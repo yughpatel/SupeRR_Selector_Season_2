@@ -96,3 +96,13 @@ What I checked after building the step:
 ## Output
 
 `outputs/04_batters.csv` and `outputs/04_bowlers.csv`: every eligible player, ranked, with his balls, high pressure balls, pressure matches, first innings share, raw and shrunk numbers, score and consistency.
+
+## Rerun after the step 3 change (Nov 15)
+
+Step 3 now knows the ground and the balls a batter has already faced. The numbers above are from the first version. After the change:
+
+- True spread of level 0.094 for batters and 0.075 for bowlers. Clutch spread 0.000 for batters and 0.048 for bowlers, against shuffles that average 0.055 and 0.049 (90% below 0.10). Clutch is still set to zero for both. The planted clutch of 0.10 is found at 0.099 for bowlers and 0.068 for batters.
+- Draft batters: Abhishek Sharma, Tim David, Suryakumar Yadav, Klaasen, Salt, Patidar, Marsh, Pooran, Buttler, Sudharsan. Travis Head (an opener who batted a lot on flat grounds) left, Nicholas Pooran came in.
+- Draft bowlers: Bumrah, Hazlewood, Ellis, Narine, Bhuvneshwar Kumar, Chakravarthy, Pathirana, Mustafizur, Rashid Khan, Santner. Mohsin Khan left, Mitchell Santner came in.
+- No team has more than two players in either list now.
+- The final lists in IPL terms are made in step 5.

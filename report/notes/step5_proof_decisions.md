@@ -134,3 +134,16 @@ Bowlers: Jasprit Bumrah, Josh Hazlewood, Matheesha Pathirana, Sunil Narine, Nath
 ## Output
 
 `outputs/05_batters.csv` and `outputs/05_bowlers.csv`: the final lists, every ranked player in the final order. `rank` is the final rank and `step4_rank` the rank from step 4. `ipl_level` is the level in IPL terms that the final rank uses. `top10_share` is the share of the 1,000 draws with the player in the top 10, `place_median` is his middle place, and 90% of the draws put him between `place_low` and `place_high`. The other columns come from step 4.
+
+## Rerun after the step 3 change (Nov 15)
+
+Step 3 now knows the ground and the balls a batter has already faced, so every test above was run again. The numbers above are from the first version. Two more changes came with it: the final lists are now built in the notebook itself (`final_level`), and every test compares with the final top 10 in IPL terms, not with the step 4 order.
+
+- Split half: level 0.32 for batters and 0.20 for bowlers, clutch -0.23 and +0.07 (shuffles from -0.25 to +0.24), high pressure balls only -0.11 and +0.21. Level is the best blend weight for batters in 197 of 200 tries.
+- T20I gap: 0.084 for batters and 0.043 for bowlers. In IPL terms the batter names stay. Two bowlers change: Kuldeep Yadav and Trent Boult in, Mustafizur Rahman and Mitchell Santner out.
+- IPL balls only: 7 of 10 batters and 7 of 10 bowlers stay. Rule index: 8 batters (Abhishek Sharma and Patidar not ranked under it) and 10 bowlers.
+- Test 5 (my choices): batters 7 / 8 / 9 / 7 with a wicket price of 0 / 0.5 / 1.5 / 2, 8 / 6 on the recent seasons, 8 with no shrinking. Bowlers 6 / 8 / 9 / 7, 7 / 5, 8. Abhishek Sharma, Tim David, Klaasen, Patidar, Bumrah and Bhuvneshwar Kumar never drop out. Buttler, Pooran, Rashid Khan, Kuldeep Yadav and Boult drop out in 5 of 7.
+- New test 6, looking forward (`outputs/05_forward.csv`). The level from 2022 to 2025 against the 2026 level, about 40 players per list: batters 0.04 (2024 and 2025 only: 0.11, 2025 only: 0.24), bowlers 0.23 (-0.01, 0.04). One season moves these by about 0.15 on luck alone, so no window wins for both lists. I keep the five year level and say in the report that it is a weak forecast for batters.
+- Final batters: Abhishek Sharma, Tim David, Suryakumar Yadav, Klaasen, Patidar, Salt, Sudharsan, Marsh, Pooran, Buttler.
+- Final bowlers: Bumrah, Hazlewood, Narine, Bhuvneshwar Kumar, Ellis, Chakravarthy, Pathirana, Rashid Khan, Kuldeep Yadav, Boult.
+- Rank confidence: batters 1 to 5 in the top 10 in 90% to 97% of the redraws, places 7 to 10 in 29% to 50%. Bowlers 1 to 3 in 78% to 95%, places 8 to 10 in 29% to 36%. Mohsin Khan (50%) is the closest bowler outside, Head (37%) and Stoinis (36%) the closest batters.
